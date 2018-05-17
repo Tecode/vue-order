@@ -6,14 +6,14 @@
             <h2>{{item.name}}</h2>
             <yd-list :theme='3'>
                 <yd-list-item v-for='product in item.foods'>
-                    <img slot='img' :src='product.icon'>
+                    <img slot='img' :src='product.icon' @click='showDetail(product)' />
                     <yd-list-other slot='other'>
                       <div style="width:100%">
                         <div class='info'>
                           <p class='list-name'>{{product.name}}</p>
                           <p class='list-price'>¥{{product.price}}</p>
                         </div>
-                          <button class='add-product'>添加</button>
+                          <button @click='showDetail(product)' class='add-product'>添加</button>
                       </div>
                     </yd-list-other>
                 </yd-list-item>
@@ -22,21 +22,31 @@
         </yd-scrollnav-panel>
         <yd-backtop></yd-backtop>
     </yd-scrollnav>
+    <show-detail 
+    :visible="visible" 
+    :productDetail='productDetail' 
+    :callBack='callBack'
+    ></show-detail>
 </yd-flexbox>
 </template>
 
 <script>
-import { getProductListApi } from '@/api';
+import { getProductListApi } from "@/api";
+import ShowDetail from "./ShowDetail";
 export default {
   data() {
     return {
-      list: []
+      list: [],
+      productDetail: {},
+      visible: false
     };
+  },
+  components: {
+    ShowDetail
   },
   created() {
     getProductListApi()
       .then(({ data }) => {
-        console.log(data.data);
         this.list = data.data;
       })
       .catch(err => {
@@ -44,7 +54,13 @@ export default {
       });
   },
   methods: {
-    
+    showDetail(productDetail) {
+      this.visible = true;
+      this.productDetail = productDetail;
+    },
+    callBack() {
+      this.visible = !this.visible;
+    }
   }
 };
 </script>
@@ -53,7 +69,7 @@ export default {
 <style scoped>
 h1,
 h2 {
-  padding: .15rem 0;
+  padding: 0.15rem 0;
 }
 ul {
   list-style-type: none;
@@ -71,22 +87,22 @@ a {
   text-align: left;
   overflow: hidden;
   display: -webkit-box;
-    -webkit-line-clamp: 1;
-    -webkit-box-orient: vertical;
+  -webkit-line-clamp: 1;
+  -webkit-box-orient: vertical;
 }
 .list-price {
   text-align: left;
 }
 .add-product {
-display: block;
-    text-align: center;
-    width: 100%;
-    border: 1px solid #ef4f4f;
-    padding: .1rem 0;
-    border-radius: 4px;
-    color: #ef4f4f;
+  display: block;
+  text-align: center;
+  width: 100%;
+  border: 1px solid #ef4f4f;
+  padding: 0.1rem 0;
+  border-radius: 4px;
+  color: #ef4f4f;
 }
 .info {
-  height: .8rem;
+  height: 0.8rem;
 }
 </style>
