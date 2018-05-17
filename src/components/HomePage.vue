@@ -1,6 +1,6 @@
 <template>
     <yd-flexbox>
-        <yd-scrollnav>
+    <yd-scrollnav>
             <yd-scrollnav-panel :label='item.name' v-for='(item, key) in list' :key='key'>
                 <!-- 内容 -->
                 <h2>{{item.name}}</h2>
@@ -39,6 +39,9 @@
                 :productDetail= 'productDetail'
                 :callBack= 'callBack'
         ></show-detail>
+        <div @click='linkPage()'>
+            <yd-icon name='search' class="search"></yd-icon>
+        </div>
     </yd-flexbox>
 </template>
 
@@ -72,6 +75,10 @@ export default {
     },
     callBack () {
       this.visible = !this.visible
+    },
+    linkPage () {
+      console.log(5)
+      this.$router.push({path: '/search', query: { name: 'private' }})
     }
   }
 }
@@ -124,6 +131,18 @@ a {
 }
 .text-right{
     text-align: right;
+}
+.search {
+    position: fixed;
+    bottom: 180px;
+    width: 1rem;
+    height: 1rem;
+    right: 5%;
+    background-color: #fff;
+    color: #ef4f4f;
+    padding-top: .14rem;
+    border-radius: 999px;
+    border: 1px solid #ef4f4f;
 }
 .footer-car {
     position: fixed;

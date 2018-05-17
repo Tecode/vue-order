@@ -19,5 +19,6 @@ export default {
   color: #2c3e50;
   display: flex;
   flex: 1;
+  height: 100vh;
 }
 </style>
