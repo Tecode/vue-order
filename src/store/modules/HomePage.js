@@ -11,11 +11,6 @@ const HomePage = {
       state.isShow = isShow
       state.text = text
       state.isError = isError
-      setTimeout(() => {
-        state.isShow = false
-        state.text = ''
-        state.isError = false
-      }, time)
     }
   }
 }

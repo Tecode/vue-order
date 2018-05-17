@@ -1,14 +1,14 @@
 <template>
 <yd-flexbox>
     <yd-scrollnav>
-        <yd-scrollnav-panel :label='item.name' v-for='item, key in list' :key='key'>
+        <yd-scrollnav-panel :label='item.name' v-for='(item, key) in list' :key='key'>
             <!-- 内容 -->
             <h2>{{item.name}}</h2>
             <yd-list :theme='3'>
-                <yd-list-item v-for='product in item.foods'>
+                <yd-list-item v-for='product in item.foods' :key='product.name'>
                     <img slot='img' :src='product.icon' @click='showDetail(product)' />
                     <yd-list-other slot='other'>
-                      <div style="width:100%">
+                      <div style='width:100%'>
                         <div class='info'>
                           <p class='list-name'>{{product.name}}</p>
                           <p class='list-price'>¥{{product.price}}</p>
@@ -22,47 +22,47 @@
         </yd-scrollnav-panel>
         <yd-backtop></yd-backtop>
     </yd-scrollnav>
-    <show-detail 
-    :visible="visible" 
-    :productDetail='productDetail' 
-    :callBack='callBack'
+    <show-detail
+    :visible= 'visible'
+    :productDetail= 'productDetail'
+    :callBack= 'callBack'
     ></show-detail>
 </yd-flexbox>
 </template>
 
 <script>
-import { getProductListApi } from "@/api";
-import ShowDetail from "./ShowDetail";
+import { getProductListApi } from '@/api'
+import ShowDetail from './ShowDetail'
 export default {
-  data() {
+  data () {
     return {
       list: [],
       productDetail: {},
       visible: false
-    };
+    }
   },
   components: {
     ShowDetail
   },
-  created() {
+  created () {
     getProductListApi()
       .then(({ data }) => {
-        this.list = data.data;
+        this.list = data.data
       })
       .catch(err => {
-        console.log(err);
-      });
+        console.log(err)
+      })
   },
   methods: {
-    showDetail(productDetail) {
-      this.visible = true;
-      this.productDetail = productDetail;
+    showDetail (productDetail) {
+      this.visible = true
+      this.productDetail = productDetail
     },
-    callBack() {
-      this.visible = !this.visible;
+    callBack () {
+      this.visible = !this.visible
     }
   }
-};
+}
 </script>
 
 <!-- Add 'scoped' attribute to limit CSS to this component only -->
