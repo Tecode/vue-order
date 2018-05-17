@@ -6,3 +6,7 @@ axios.defaults.headers.common['Authorization'] = 'Bearer eyJ0eXAiOiJKV1QiLCJhbGc
 export const getProductListApi = () => {
   return axios.get('/customer/ordermeal/list')
 }
+// 获取最新的购物车信息
+export const getCartInfoApi = () => {
+  return axios.get('/customer/ordermeal/updateCart')
+}
