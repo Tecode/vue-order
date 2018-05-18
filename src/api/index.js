@@ -26,3 +26,7 @@ export const addCartApi = (params) => {
 export const searchApi = (params) => {
   return axios.get(`/customer/ordermeal/search?name=${params.name}`)
 }
+// 设置就坐的人数
+export const choiceeatApi = (params) => {
+  return axios.post(`/customer/ordermeal/seat?tableId=${params.tableId}&peopleNumber=${params.peopleNumber}`)
+}

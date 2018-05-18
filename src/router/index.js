@@ -3,6 +3,10 @@ import Router from 'vue-router'
 import HomePage from '@/components/HomePage'
 import Search from '@/components/Search'
 import Order from '@/components/Order'
+import SeatNumber from '@/components/SeatNumber'
+import Queue from '@/components/Queue'
+import ViewQueue from '@/components/ViewQueue'
+import Reservation from '@/components/Reservation'
 
 Vue.use(Router)
 
@@ -22,6 +26,26 @@ export default new Router({
       path: '/order',
       name: 'Order',
       component: Order
+    },
+    {
+      path: '/seat',
+      name: 'SeatNumber',
+      component: SeatNumber
+    },
+    {
+      path: '/queue',
+      name: 'Queue',
+      component: Queue
+    },
+    {
+      path: '/view-queue',
+      name: 'ViewQueue',
+      component: ViewQueue
+    },
+    {
+      path: '/reservation',
+      name: 'Reservation',
+      component: Reservation
     }
   ]
 })
