@@ -1,5 +1,175 @@
 <template>
-    <div>
-        搜索页面
+    <div class='flex-box'>
+        <yd-search v-model="value1" :on-submit="submitHandler"></yd-search>
+        <yd-flexbox :class="[list.length == 0 ? 'item-center list-box' : 'list-box']">
+            <p v-if="list.length == 0" class="text-aligin:center">暂无数据</p>
+            <yd-list :theme='3'>
+                <yd-list-item v-for='product in list' :key='product.id'>
+                    <img slot='img' :src='product.icon' @click='showDetail(product)' />
+                    <yd-list-other slot='other'>
+                        <div style='width:100%'>
+                            <div class='info'>
+                                <p class='list-name'>{{product.name}}</p>
+                                <p class='list-price'>¥{{product.price}}</p>
+                            </div>
+                            <button @click='showDetail(product)' class='add-product'>添加</button>
+                        </div>
+                    </yd-list-other>
+                </yd-list-item>
+            </yd-list>
+        </yd-flexbox>
+        <div class='footer-car'>
+            <yd-flexbox class='button-info'>
+                <yd-flexbox-item class='shop-car'>
+                        <span @click='showShopCar'>
+                        <yd-icon name='order'></yd-icon>
+                        <span>已点了{{myShopCar.length}}个菜</span>
+                        </span>
+                </yd-flexbox-item>
+                <yd-flexbox-item class='text-right'>
+                    <yd-button type='danger'>选好了</yd-button>
+                </yd-flexbox-item>
+            </yd-flexbox>
+        </div>
+        <yd-backtop></yd-backtop>
+        <show-detail :productDetail= 'productDetail' ></show-detail>
+        <show-car></show-car>
     </div>
 </template>
+
+<script>
+import { searchApi } from '@/api'
+import ShowDetail from './ShowDetail'
+import ShowCar from './ShowCar'
+import { mapMutations, mapState, mapActions } from 'vuex'
+export default {
+  data () {
+    return {
+      list: [],
+      productDetail: {},
+      visible: false
+    }
+  },
+  components: {
+    ShowDetail,
+    ShowCar
+  },
+  created () {
+    // 获取购物车信息
+    this.refreshCar({ tableId: 37 })
+  },
+  computed: {
+    ...mapState({
+      showCar: state => state.HomePage.showCar,
+      myShopCar: state => state.HomePage.myShopCar
+    })
+  },
+  methods: {
+    ...mapMutations({
+      setValue: 'SET_VALUE',
+      resetStore: 'RESET_STORE'
+    }),
+    ...mapActions({
+      refreshCar: 'UPDATE_CAR'
+    }),
+    submitHandler (value) {
+      this.$dialog.loading.open('正在搜索')
+      searchApi({name: value})
+        .then(({ data }) => {
+          this.list = data.data
+          this.$dialog.loading.close()
+        })
+        .catch(err => {
+          console.log(err)
+          this.$dialog.loading.close()
+        })
+        // this.$dialog.toast({mes: `搜索：${value}`});
+    },
+    showDetail (productDetail) {
+      this.setValue({ key: 'showDetail', value: true })
+      this.productDetail = productDetail
+    },
+    showShopCar () {
+      // 临时的tableId
+      this.refreshCar({ tableId: 37 })
+      this.setValue({ key: 'showCar', value: true })
+    },
+    beforeDestroy: function () {
+      this.resetStore()
+    }
+  }
+}
+</script>
+
+<!-- Add 'scoped' attribute to limit CSS to this component only -->
+<style scoped>
+h1,
+h2 {
+  padding: 0.15rem 0;
+}
+ul {
+  list-style-type: none;
+  padding: 0;
+}
+li {
+  display: inline-block;
+  margin: 0 10px;
+}
+a {
+  color: #42b983;
+}
+.list-name {
+  color: #4c4c4c;
+  text-align: left;
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-line-clamp: 1;
+  -webkit-box-orient: vertical;
+}
+.list-price {
+  text-align: left;
+}
+.add-product {
+  display: block;
+  text-align: center;
+  width: 100%;
+  border: 1px solid #ef4f4f;
+  padding: 0.1rem 0;
+  border-radius: 4px;
+  color: #ef4f4f;
+}
+.info {
+  height: 0.8rem;
+}
+.shop-car {
+  color: #ef4f4f;
+  font-size: 0.34rem;
+  text-align: left;
+}
+.text-right {
+  text-align: right;
+}
+.list-box {
+  overflow: auto;
+  /*height: 100%;*/
+  flex: 1;
+}
+.item-center {
+    align-content: center;
+    justify-content: center;
+}
+.flex-box {
+    height: 100%;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+}
+.footer-car {
+  position: relative;
+  bottom: 0;
+  width: 100%;
+  background-color: #fff;
+  padding: 0.15rem 0.4rem;
+  border-top: 1px solid #dedede;
+}
+</style>

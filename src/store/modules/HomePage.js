@@ -73,7 +73,7 @@ const HomePage = {
       })
     },
     // 加入（修改）购物车
-    [ADD_CAR] ({state, commit, rootState}, {tableId, productId, amount, openId}) {
+    [ADD_CAR] ({state, commit, dispatch}, {tableId, productId, amount, openId}) {
       addCartApi({tableId, productId, amount, openId}).then((resp) => {
         console.log(resp.data)
         Toast({
@@ -81,6 +81,8 @@ const HomePage = {
           timeout: 1500,
           icon: 'success'
         })
+        // 重新请求购物车信息
+        dispatch('UPDATE_CAR', {tableId})
         commit('SET_VALUE', {key: 'showDetail', value: false})
       }).catch((err) => {
         console.log(err)

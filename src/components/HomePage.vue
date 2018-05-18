@@ -26,7 +26,7 @@
                     <yd-flexbox-item class="shop-car">
                         <span @click='showShopCar'>
                         <yd-icon name="order"></yd-icon>
-                        <span>已点了5个菜</span>
+                        <span>已点了{{myShopCar.length}}个菜</span>
                         </span>
                     </yd-flexbox-item>
                     <yd-flexbox-item class="text-right">
@@ -69,10 +69,13 @@ export default {
       .catch(err => {
         console.log(err)
       })
+    // 获取购物车信息
+    this.refreshCar({tableId: 37})
   },
   computed: {
     ...mapState({
-      showCar: state => state.HomePage.showCar
+      showCar: state => state.HomePage.showCar,
+      myShopCar: state => state.HomePage.myShopCar
     })
   },
   methods: {

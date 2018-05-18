@@ -22,3 +22,7 @@ export const updateCartApi = (params) => {
 export const addCartApi = (params) => {
   return axios.post(`/customer/ordermeal/addCart?openId=${params.openId}&tableId=${params.tableId}&productId=${params.productId}&amount=${params.amount}`)
 }
+// 搜索菜品
+export const searchApi = (params) => {
+  return axios.get(`/customer/ordermeal/search?name=${params.name}`)
+}
