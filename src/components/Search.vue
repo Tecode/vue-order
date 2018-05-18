@@ -1,7 +1,7 @@
 <template>
     <div class='flex-box'>
         <yd-search v-model="value1" :on-submit="submitHandler"></yd-search>
-        <yd-flexbox :class="[list.length == 0 ? 'item-center list-box' : 'list-box']">
+        <div :class="[list.length == 0 ? 'item-center list-box' : 'list-box']">
             <p v-if="list.length == 0" class="text-aligin:center">暂无数据</p>
             <yd-list :theme='3'>
                 <yd-list-item v-for='product in list' :key='product.id'>
@@ -17,7 +17,7 @@
                     </yd-list-other>
                 </yd-list-item>
             </yd-list>
-        </yd-flexbox>
+        </div>
         <div class='footer-car'>
             <yd-flexbox class='button-info'>
                 <yd-flexbox-item class='shop-car'>
@@ -150,8 +150,7 @@ a {
   text-align: right;
 }
 .list-box {
-  overflow: auto;
-  /*height: 100%;*/
+  overflow-y: auto;
   flex: 1;
 }
 .item-center {
