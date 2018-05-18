@@ -96,7 +96,6 @@ export default {
       this.setValue({key: 'showCar', value: true})
     },
     linkPage () {
-      console.log(5)
       this.$router.push({path: '/search', query: { name: 'private' }})
     },
     beforeDestroy: function () {

@@ -1,6 +1,6 @@
 <template>
     <div class='flex-box'>
-        <yd-search v-model="value1" :on-submit="submitHandler"></yd-search>
+        <yd-search v-model="value1" placeholder="请输入菜品名或口味" :on-submit="submitHandler"></yd-search>
         <div :class="[list.length == 0 ? 'item-center list-box' : 'list-box']">
             <p v-if="list.length == 0" class="text-aligin:center">暂无数据</p>
             <yd-list :theme='3'>
