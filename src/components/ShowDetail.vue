@@ -1,41 +1,56 @@
 <template>
-        <yd-popup v-model='visible' position='center' :close-on-masker='masker' width='90%'>
+        <yd-popup v-model='showDetail' position='center' :close-on-masker='false' width='90%'>
             <div class='detail-box'>
               <h3>{{productDetail.name}}</h3>
-              <yd-icon class='close' name='error-outline' @click.native='callBack()'></yd-icon>
+              <yd-icon class='close' name='error-outline' @click.native='setValue({key:"showDetail", value:false})'></yd-icon>
                 <div style='height:5rem;overflow:hidden'>
                   <img :src='productDetail.icon' />
                 </div>
                 <yd-flexbox class="counting">
                     <yd-flexbox-item class="count">选择数量</yd-flexbox-item>
                     <yd-flexbox-item class="text-right">
-                        <yd-spinner min="0" unit="1" v-model="count"></yd-spinner>
+                        <yd-spinner min="0" unit="1" v-model="homePage.dishes"></yd-spinner>
                     </yd-flexbox-item>
                 </yd-flexbox>
                 <yd-flexbox class="button-info">
                     <yd-flexbox-item class="count">¥{{productDetail.price}}/份</yd-flexbox-item>
                     <yd-flexbox-item class="text-right">
+                        <span @click='addDishes(productDetail.id)'>
                         <yd-button type="danger">确 定</yd-button>
+                        </span>
                     </yd-flexbox-item>
                 </yd-flexbox>
             </div>
         </yd-popup>
 </template>
 <script>
+import {mapMutations, mapState, mapActions} from 'vuex'
 export default {
   name: 'ShowDetail',
-  data () {
-    return {
-      masker: false,
-      count: 0
-    }
+  props: ['productDetail'],
+  computed: {
+    ...mapState({
+      homePage: state => state.HomePage,
+      dishes: state => state.HomePage.dishes,
+      showDetail: state => state.HomePage.showDetail
+    })
   },
-  props: ['visible', 'productDetail', 'callBack']
-  // watch:{
-  //   show(newData) {
-  //     this.visible = newData;
-  //   }
-  // }
+  methods: {
+    addDishes (productId) {
+      console.log(this.dishes, productId, '-----')
+      this.addCar({
+        tableId: 37,
+        productId,
+        amount: this.dishes
+      })
+    },
+    ...mapMutations({
+      setValue: 'SET_VALUE'
+    }),
+    ...mapActions({
+      addCar: 'ADD_CAR'
+    })
+  }
 }
 </script>
 <style scoped>

@@ -24,8 +24,10 @@
             <div class="footer-car">
                 <yd-flexbox class="button-info">
                     <yd-flexbox-item class="shop-car">
+                        <span @click='setValue({key: "showCar", value: true})'>
                         <yd-icon name="order"></yd-icon>
                         <span>已点了5个菜</span>
+                        </span>
                     </yd-flexbox-item>
                     <yd-flexbox-item class="text-right">
                         <yd-button type="danger">选好了</yd-button>
@@ -34,11 +36,8 @@
             </div>
             <yd-backtop></yd-backtop>
         </yd-scrollnav>
-        <show-detail
-                :visible= 'visible'
-                :productDetail= 'productDetail'
-                :callBack= 'callBack'
-        ></show-detail>
+        <show-detail :productDetail= 'productDetail' ></show-detail>
+        <show-car></show-car>
         <div @click='linkPage()'>
             <yd-icon name='search' class="search"></yd-icon>
         </div>
@@ -48,6 +47,8 @@
 <script>
 import { getProductListApi } from '@/api'
 import ShowDetail from './ShowDetail'
+import ShowCar from './ShowCar'
+import {mapMutations, mapState} from 'vuex'
 export default {
   data () {
     return {
@@ -57,7 +58,8 @@ export default {
     }
   },
   components: {
-    ShowDetail
+    ShowDetail,
+    ShowCar
   },
   created () {
     getProductListApi()
@@ -68,17 +70,26 @@ export default {
         console.log(err)
       })
   },
+  computed: {
+    ...mapState({
+      showCar: state => state.HomePage.showCar
+    })
+  },
   methods: {
+    ...mapMutations({
+      setValue: 'SET_VALUE',
+      resetStore: 'RESET_STORE'
+    }),
     showDetail (productDetail) {
-      this.visible = true
+      this.setValue({key: 'showDetail', value: true})
       this.productDetail = productDetail
-    },
-    callBack () {
-      this.visible = !this.visible
     },
     linkPage () {
       console.log(5)
       this.$router.push({path: '/search', query: { name: 'private' }})
+    },
+    beforeDestroy: function () {
+      this.resetStore()
     }
   }
 }
