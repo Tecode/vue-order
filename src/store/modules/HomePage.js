@@ -10,7 +10,7 @@ import {
   addCartApi,
   updateCartApi } from '@/api'
 import {
-  // Confirm,
+  Confirm,
   // Alert,
   Toast
   // Notify,
@@ -32,6 +32,7 @@ const HomePage = {
     },
     [SET_VALUE] (state, {key, value}) {
       console.log(key, value, './//////////')
+      // 打开购物车
       state[key] = value
     },
     [RESET_STORE] (state) {
@@ -41,24 +42,39 @@ const HomePage = {
   },
   actions: {
     // 清除购物车
-    [CLEAR_DISHES] ({state, commit, rootState}, id) {
-      deleteAllCartApi({tableId: id}).then((resp) => {
-        // commit('SET_VALUE', {type: 'myShopCar', value: []})
-      }).catch((err) => {
-        console.log(err)
+    [CLEAR_DISHES] ({state, commit, rootState}, tableId) {
+      Confirm({
+        title: '清空购物车',
+        mes: '确定清空购物车吗?',
+        opts: () => {
+          deleteAllCartApi({tableId}).then((resp) => {
+            Toast({
+              mes: resp.data.msg,
+              timeout: 1500,
+              icon: 'success'
+            })
+            commit('SET_VALUE', {key: 'myShopCar', value: []})
+          }).catch(() => {
+            Toast({
+              mes: '出错了',
+              timeout: 1500,
+              icon: 'error'
+            })
+          })
+        }
       })
     },
     // 刷新购物车
-    [UPDATE_CAR] ({state, commit, rootState}, id) {
-      updateCartApi({tableId: id}).then((resp) => {
-        // commit('SET_VALUE', {type: 'myShopCar', value: []})
+    [UPDATE_CAR] ({state, commit, rootState}, {tableId}) {
+      updateCartApi({tableId}).then(({data}) => {
+        commit('SET_VALUE', {key: 'myShopCar', value: data.data})
       }).catch((err) => {
         console.log(err)
       })
     },
     // 加入（修改）购物车
-    [ADD_CAR] ({state, commit, rootState}, {tableId, productId, amount}) {
-      addCartApi({tableId, productId, amount, openId: 'oOojD1L0z3FdADqZKjv7Y7QV79Gc'}).then((resp) => {
+    [ADD_CAR] ({state, commit, rootState}, {tableId, productId, amount, openId}) {
+      addCartApi({tableId, productId, amount, openId}).then((resp) => {
         console.log(resp.data)
         Toast({
           mes: resp.data.msg,

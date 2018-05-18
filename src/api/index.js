@@ -12,7 +12,7 @@ export const getCartInfoApi = () => {
 }
 // 清除购物车
 export const deleteAllCartApi = (params) => {
-  return axios.post('/customer/ordermeal/deleteAllCart', {params})
+  return axios.post(`/customer/ordermeal/deleteAllCart?tableId=${params.tableId}`)
 }
 // 刷新购物车
 export const updateCartApi = (params) => {

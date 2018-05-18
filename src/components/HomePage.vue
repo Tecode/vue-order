@@ -24,7 +24,7 @@
             <div class="footer-car">
                 <yd-flexbox class="button-info">
                     <yd-flexbox-item class="shop-car">
-                        <span @click='setValue({key: "showCar", value: true})'>
+                        <span @click='showShopCar'>
                         <yd-icon name="order"></yd-icon>
                         <span>已点了5个菜</span>
                         </span>
@@ -48,7 +48,7 @@
 import { getProductListApi } from '@/api'
 import ShowDetail from './ShowDetail'
 import ShowCar from './ShowCar'
-import {mapMutations, mapState} from 'vuex'
+import {mapMutations, mapState, mapActions} from 'vuex'
 export default {
   data () {
     return {
@@ -80,9 +80,17 @@ export default {
       setValue: 'SET_VALUE',
       resetStore: 'RESET_STORE'
     }),
+    ...mapActions({
+      refreshCar: 'UPDATE_CAR'
+    }),
     showDetail (productDetail) {
       this.setValue({key: 'showDetail', value: true})
       this.productDetail = productDetail
+    },
+    showShopCar () {
+      // 临时的tableId
+      this.refreshCar({tableId: 37})
+      this.setValue({key: 'showCar', value: true})
     },
     linkPage () {
       console.log(5)

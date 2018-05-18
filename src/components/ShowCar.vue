@@ -2,13 +2,13 @@
     <yd-popup :close-on-masker='false' v-model='showCar' position='bottom' height='60%'>
         <div class='header'>
             <h3>已选菜品</h3>
-            <p class='clear'><yd-icon name="delete" size='.4rem'></yd-icon>清除</p>
+            <p class='clear' @click='clearDishes(tableId)'><yd-icon name="delete" size='.4rem'></yd-icon>清除</p>
             <p class='close' @click='setValue({key: "showCar", value: false})'>
                 <yd-icon name="error-outline" size='.4rem'></yd-icon>关闭</p>
         </div>
-        <yd-flexbox class='count-box'>
+        <yd-flexbox v-for='(item, key) in myShopCar' :key="key" class='count-box'>
             <yd-flexbox-item class='text-left'>
-              <p class='name' @click='setValue("showCar", false)'>卤猪蹄</p>
+              <p class='name' @click='setValue("showCar", false)'>{{item.name}}</p>
               <p class='count-info'>¥12/份</p>
             </yd-flexbox-item>
             <yd-flexbox-item class='text-right'>
@@ -22,12 +22,14 @@ import {mapMutations, mapState, mapActions} from 'vuex'
 export default {
   data () {
     return {
-      spinner: 0
+      spinner: 0,
+      tableId: 37
     }
   },
   computed: {
     ...mapState({
-      showCar: state => state.HomePage.showCar
+      showCar: state => state.HomePage.showCar,
+      myShopCar: state => state.HomePage.myShopCar
     })
   },
   methods: {

@@ -37,11 +37,11 @@ export default {
   },
   methods: {
     addDishes (productId) {
-      console.log(this.dishes, productId, '-----')
       this.addCar({
         tableId: 37,
         productId,
-        amount: this.dishes
+        amount: this.dishes,
+        openId: 'oOojD1L0z3FdADqZKjv7Y7QV79Gc'
       })
     },
     ...mapMutations({
