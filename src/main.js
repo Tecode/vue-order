@@ -11,6 +11,11 @@ const store = createStore()
 
 Vue.config.productionTip = false
 Vue.use(YDUI)
+Vue.directive('title', {
+  inserted: function (el, binding) {
+    document.title = binding.value
+  }
+})
 
 /* eslint-disable no-new */
 new Vue({

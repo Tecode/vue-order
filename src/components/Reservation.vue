@@ -1,5 +1,5 @@
 <template>
-    <div class="tab-box">
+    <div v-title="'餐厅详情'" class="tab-box">
         <h3>
             <yd-icon name="time" size=".4rem"></yd-icon>
             <span>预约订座</span>

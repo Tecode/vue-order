@@ -1,5 +1,5 @@
 <template>
-    <div class="queue-box">
+    <div v-title="'餐厅详情'" class="queue-box">
         <h2>排号</h2>
         <yd-flexbox style='margin-top: .5rem' v-for='(item, key) in list' :key='key'>
             <yd-flexbox-item v-for='(queue, key1) in item' :key='key1'>

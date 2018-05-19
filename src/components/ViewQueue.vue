@@ -1,5 +1,5 @@
 <template>
-<div class='view-box'>
+<div v-title="'号单详情'" class='view-box'>
     <div class='status'>
         <yd-icon size='.4rem' color='#16aa6b' name="checkoff"></yd-icon> 已取号
     </div>

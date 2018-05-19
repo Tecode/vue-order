@@ -1,5 +1,5 @@
 <template>
-    <div class="cell-box">
+    <div v-title="'在线预约'" class="cell-box">
         <h3 class="header">酒阳蒸经(观音桥店)</h3>
         <yd-cell-group>
             <yd-cell-item arrow>
