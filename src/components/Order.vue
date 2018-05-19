@@ -34,10 +34,10 @@
             </yd-flexbox>
         </yd-flexbox-item>
         <yd-flexbox class="footer" direction="horizontal">
-            <yd-flexbox-item class="add-dishes">
+            <yd-flexbox-item @click.native="dishes" class="add-dishes">
                 加菜
             </yd-flexbox-item>
-            <yd-flexbox-item class="creat-order">
+            <yd-flexbox-item @click.native="getOrder" class="creat-order">
                 去下单
             </yd-flexbox-item>
         </yd-flexbox>
@@ -45,6 +45,7 @@
 </template>
 <script>
 import { mapMutations, mapState, mapActions } from 'vuex'
+import { placeApi } from '@/api'
 export default {
   computed: {
     ...mapState({
@@ -77,6 +78,18 @@ export default {
           openId: 'oOojD1L0z3FdADqZKjv7Y7QV79Gc'
         })
       }
+    },
+    dishes () {
+      this.$router.push({path: '/'})
+    },
+    getOrder () {
+      placeApi({tableId: 37}).then(({data}) => {
+        if (data.code === 0) {
+          this.$router.push({path: '/order-pay'})
+        }
+      }).catch(err => {
+        console.log(err)
+      })
     }
   }
 }

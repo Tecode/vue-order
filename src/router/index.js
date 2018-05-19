@@ -8,6 +8,9 @@ import Queue from '@/components/Queue'
 import ViewQueue from '@/components/ViewQueue'
 import Reservation from '@/components/Reservation'
 import Apply from '@/components/Apply'
+import Success from '@/components/Success'
+import OrderPay from '@/components/OrderPay'
+import Pay from '@/components/Pay'
 
 Vue.use(Router)
 
@@ -52,6 +55,21 @@ export default new Router({
       path: '/apply',
       name: 'Apply',
       component: Apply
+    },
+    {
+      path: '/success',
+      name: 'Success',
+      component: Success
+    },
+    {
+      path: '/order-pay',
+      name: 'OrderPay',
+      component: OrderPay
+    },
+    {
+      path: '/pay',
+      name: 'Pay',
+      component: Pay
     }
   ]
 })

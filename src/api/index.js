@@ -46,3 +46,11 @@ export const getReservationInfoApi = (params) => {
 export const deleteCartApi = (params) => {
   return axios.post(`/customer/ordermeal/deleteCart?tableId=${params.tableId}&cartId=${params.cartId}`)
 }
+// 下单
+export const placeApi = (params) => {
+  return axios.post(`/customer/ordermeal/place?tableId=${params.tableId}`)
+}
+// 查看订单
+export const getOrderApi = (params) => {
+  return axios.get(`/customer/ordermeal/order?tableId=${params.tableId}`)
+}
