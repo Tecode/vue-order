@@ -7,6 +7,7 @@ import SeatNumber from '@/components/SeatNumber'
 import Queue from '@/components/Queue'
 import ViewQueue from '@/components/ViewQueue'
 import Reservation from '@/components/Reservation'
+import Apply from '@/components/Apply'
 
 Vue.use(Router)
 
@@ -46,6 +47,11 @@ export default new Router({
       path: '/reservation',
       name: 'Reservation',
       component: Reservation
+    },
+    {
+      path: '/apply',
+      name: 'Apply',
+      component: Apply
     }
   ]
 })

@@ -30,3 +30,11 @@ export const searchApi = (params) => {
 export const choiceeatApi = (params) => {
   return axios.post(`/customer/ordermeal/seat?tableId=${params.tableId}&peopleNumber=${params.peopleNumber}`)
 }
+// 查看商家给出的预约信息
+export const reservationApi = (params) => {
+  return axios.get(`/customer/reservation/list`)
+}
+// 申请一个预约
+export const applyApi = (params) => {
+  return axios.post(`/customer/reservation/apply?openId=${params.openId}&date=${params.date}&time=${params.time}&peopleNumber=${params.peopleNumber}&phone=${params.phone}`)
+}

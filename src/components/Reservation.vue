@@ -5,15 +5,64 @@
             <span>预约订座</span>
         </h3>
         <yd-tab>
-            <yd-tab-panel label="今天">土地是以它的肥沃和收获而被估价的；才能也是土地，不过它生产的不是粮食，而是真理。如果只能滋生瞑想和幻想的话，即使再大的才能也只是砂地或盐池，那上面连小草也长不出来的。</yd-tab-panel>
-            <yd-tab-panel label="明天">我需要三件东西：爱情友谊和图书。然而这三者之间何其相通！炽热的爱情可以充实图书的内容，图书又是人们最忠实的朋友。</yd-tab-panel>
-            <yd-tab-panel label="后天">时间是一切财富中最宝贵的财富。</yd-tab-panel>
+            <yd-tab-panel label="今天">
+                <yd-flexbox class="reservation-action" v-for="(array, ind) in today" :key="ind">
+                    <yd-flexbox-item v-for="(item, key) in array" :key="key" v-if="item.reservationTime">
+                        <h3 :class="[key % 2 === 0 ? 'border-right': '']">{{item.reservationTime}}</h3>
+                    </yd-flexbox-item>
+                </yd-flexbox>
+            </yd-tab-panel>
+            <yd-tab-panel label="明天">
+                <yd-flexbox class="reservation-action" v-for="(array, ind) in tomorrow" :key="ind">
+                    <yd-flexbox-item v-for="(item, key) in array" :key="key" v-if="item.reservationTime">
+                        <h3 :class="[key % 2 === 0 ? 'border-right': '']">{{item.reservationTime}}</h3>
+                    </yd-flexbox-item>
+                </yd-flexbox>
+            </yd-tab-panel>
+            <yd-tab-panel label="后天">
+                <yd-flexbox class="reservation-action" v-for="(array, ind) in theDayAfterTomorrow" :key="ind">
+                    <yd-flexbox-item v-for="(item, key) in array" :key="key" v-if="item.reservationTime">
+                        <h3 :class="[key % 2 === 0 ? 'border-right': '']">{{item.reservationTime}}</h3>
+                    </yd-flexbox-item>
+                </yd-flexbox>
+            </yd-tab-panel>
         </yd-tab>
+        <h2>
+            <a :href="'tel:'+tel">预约电话:{{tel}}</a>
+        </h2>
     </div>
 </template>
 <script type="text/babel">
+import { reservationApi } from '@/api'
 export default {
-
+  data () {
+    return {
+      today: [],
+      tomorrow: [],
+      theDayAfterTomorrow: [],
+      tel: ''
+    }
+  },
+  methods: {
+    modifyArr (arrData) {
+      let newArr = []
+      for (let index = 0; index < arrData.length; index += 2) {
+        newArr = [...newArr, [arrData[index], arrData[index + 1] || {reservationTime: ''}]]
+      }
+      return newArr
+    }
+  },
+  created () {
+    reservationApi().then(({data}) => {
+      console.log(this.modifyArr(data.data.today), '>>>>>>>>')
+      this.today = this.modifyArr(data.data.today)
+      this.tomorrow = this.modifyArr(data.data.tomorrow)
+      this.theDayAfterTomorrow = this.modifyArr(data.data.theDayAfterTomorrow)
+      this.tel = data.data.tel
+    }).catch((err) => {
+      console.log(err)
+    })
+  }
 }
 </script>
 <style scoped>
@@ -27,5 +76,14 @@ export default {
 }
 .tab-box h3 span {
     font-size: .36rem;
+}
+.tab-box h2 {
+    text-align: left;
+    font-size: .4rem;
+    padding: .2rem .4rem .2rem .4rem;
+    background-color: #ffffff;
+}
+.border-right {
+    border-right: 1px solid #dedede;
 }
 </style>

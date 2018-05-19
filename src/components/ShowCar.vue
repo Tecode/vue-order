@@ -12,7 +12,7 @@
               <p class='count-info'>¥12/份</p>
             </yd-flexbox-item>
             <yd-flexbox-item class='text-right'>
-              <yd-spinner min="0" :longpress='false' :readonly='true' unit="1" v-model="item.productAmount"></yd-spinner>
+              <yd-spinner min="1" :longpress='false' unit="1" v-model="item.productAmount"></yd-spinner>
             </yd-flexbox-item>
         </yd-flexbox>
     </yd-popup>
@@ -23,7 +23,8 @@ export default {
   data () {
     return {
       spinner: 0,
-      tableId: 37
+      tableId: 37,
+      list: []
     }
   },
   computed: {
@@ -40,6 +41,20 @@ export default {
     ...mapActions({
       clearDishes: 'CLEAR_DISHES'
     })
+  },
+  watch: {
+    myShopCar: {
+      handler: function (newData) {
+        for (let index = 0; index < this.list.length; ++index) {
+          console.log(newData[index], this.list[index], '>>>>>>>')
+        // if (newData[index].productAmount !== this.list[index].productAmount) {
+        //   console.log(newData[index], '---newData[index]')
+        // }
+        }
+        this.list = newData
+      },
+      deep: true
+    }
   },
   beforeDestroy: function () {
     this.resetStore()
