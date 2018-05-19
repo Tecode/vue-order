@@ -9,10 +9,10 @@
         <yd-flexbox v-for='(item, key) in myShopCar' :key="key" class='count-box'>
             <yd-flexbox-item class='text-left'>
               <p class='name' @click='setValue("showCar", false)'>{{item.productName}}</p>
-              <p class='count-info'>¥12/份</p>
+              <p class='count-info'>¥{{item.productPrice}}/份</p>
             </yd-flexbox-item>
             <yd-flexbox-item class='text-right'>
-              <yd-spinner min="1" :longpress='false' unit="1" v-model="item.productAmount"></yd-spinner>
+              <yd-spinner min="0" :longpress='false' unit="1" @click.native="changeCount(item.productAmount, item.productId, item.cartId, item.tableId)" v-model="item.productAmount"></yd-spinner>
             </yd-flexbox-item>
         </yd-flexbox>
     </yd-popup>
@@ -23,8 +23,7 @@ export default {
   data () {
     return {
       spinner: 0,
-      tableId: 37,
-      list: []
+      tableId: 37
     }
   },
   computed: {
@@ -39,21 +38,21 @@ export default {
       resetStore: 'RESET_STORE'
     }),
     ...mapActions({
-      clearDishes: 'CLEAR_DISHES'
-    })
-  },
-  watch: {
-    myShopCar: {
-      handler: function (newData) {
-        for (let index = 0; index < this.list.length; ++index) {
-          console.log(newData[index], this.list[index], '>>>>>>>')
-        // if (newData[index].productAmount !== this.list[index].productAmount) {
-        //   console.log(newData[index], '---newData[index]')
-        // }
-        }
-        this.list = newData
-      },
-      deep: true
+      clearDishes: 'CLEAR_DISHES',
+      changeCar: 'ADD_CAR',
+      deleteCart: 'DELETE_CARINFO'
+    }),
+    changeCount (amount, productId, cartId, tableId) {
+      if (amount === 0) {
+        this.deleteCart({productId, cartId, tableId})
+      } else {
+        this.changeCar({
+          tableId: 37,
+          productId,
+          amount,
+          openId: 'oOojD1L0z3FdADqZKjv7Y7QV79Gc'
+        })
+      }
     }
   },
   beforeDestroy: function () {

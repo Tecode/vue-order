@@ -3,11 +3,13 @@ import {
   SET_VALUE,
   RESET_STORE,
   UPDATE_CAR,
+  DELETE_CARINFO,
   ADD_CAR,
   CLEAR_DISHES } from '../actionTypes'
 import {
   deleteAllCartApi,
   addCartApi,
+  deleteCartApi,
   updateCartApi } from '@/api'
 import {
   Confirm,
@@ -95,8 +97,21 @@ const HomePage = {
           }
         })
       })
+    },
+    // 删除一条购物车信息
+    [DELETE_CARINFO] ({dispatch}, {cartId, tableId}) {
+      deleteCartApi({tableId, cartId}).then(({data}) => {
+        Toast({
+          mes: data.msg,
+          timeout: 1500,
+          icon: 'success'
+        })
+        // 重新请求购物车信息
+        dispatch('UPDATE_CAR', {tableId})
+      }).catch(err => {
+        console.log(err)
+      })
     }
-
   }
 }
 

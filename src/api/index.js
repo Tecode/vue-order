@@ -38,3 +38,11 @@ export const reservationApi = (params) => {
 export const applyApi = (params) => {
   return axios.post(`/customer/reservation/apply?openId=${params.openId}&date=${params.date}&time=${params.time}&peopleNumber=${params.peopleNumber}&phone=${params.phone}`)
 }
+// 查看我的预约
+export const getReservationInfoApi = (params) => {
+  return axios.get(`/customer/reservation/info?openId=${params.openId}`)
+}
+// 删除一条购物车信息
+export const deleteCartApi = (params) => {
+  return axios.post(`/customer/ordermeal/deleteCart?tableId=${params.tableId}&cartId=${params.cartId}`)
+}
