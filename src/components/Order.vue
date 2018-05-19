@@ -29,7 +29,7 @@
                     <p class='count-info'>¥12/份</p>
                 </yd-flexbox-item>
                 <yd-flexbox-item class='text-right'>
-                    <yd-spinner min="0" :longpress='false' :readonly='true' unit="1" v-model="item.productAmount"></yd-spinner>
+                    <yd-spinner min="0" @click.native="changeCount(item.productAmount, item.productId, item.cartId, item.tableId)" :longpress='false' unit="1" v-model="item.productAmount"></yd-spinner>
                 </yd-flexbox-item>
             </yd-flexbox>
         </yd-flexbox-item>
@@ -63,7 +63,10 @@ export default {
     }),
     ...mapActions({
       refreshCar: 'UPDATE_CAR'
-    })
+    }),
+    changeCount () {
+      console.log(4)
+    }
   }
 }
 </script>
