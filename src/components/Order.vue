@@ -62,10 +62,21 @@ export default {
       resetStore: 'RESET_STORE'
     }),
     ...mapActions({
-      refreshCar: 'UPDATE_CAR'
+      refreshCar: 'UPDATE_CAR',
+      deleteCart: 'DELETE_CARINFO',
+      changeCar: 'ADD_CAR'
     }),
-    changeCount () {
-      console.log(4)
+    changeCount (amount, productId, cartId, tableId) {
+      if (amount === 0) {
+        this.deleteCart({productId, cartId, tableId})
+      } else {
+        this.changeCar({
+          tableId: 37,
+          productId,
+          amount,
+          openId: 'oOojD1L0z3FdADqZKjv7Y7QV79Gc'
+        })
+      }
     }
   }
 }

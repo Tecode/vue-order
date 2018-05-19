@@ -30,7 +30,7 @@
                         </span>
                     </yd-flexbox-item>
                     <yd-flexbox-item class="text-right">
-                        <yd-button type="danger">选好了</yd-button>
+                        <yd-button @click.native="linkOrder" type="danger">选好了</yd-button>
                     </yd-flexbox-item>
                 </yd-flexbox>
             </div>
@@ -97,6 +97,9 @@ export default {
     },
     linkPage () {
       this.$router.push({path: '/search', query: { name: 'private' }})
+    },
+    linkOrder () {
+      this.$router.push({path: '/order'})
     },
     beforeDestroy: function () {
       this.resetStore()

@@ -9,7 +9,7 @@
     "start": "npm run dev",
     "lint": "eslint --ext .js,.vue src",
     "build": "node build/build.js",
-    "start_pro": "node server.js"
+    "start_pro": "NODE_ENV=production node server.js"
   },
   "dependencies": {
     "axios": "^0.18.0",
