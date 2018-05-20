@@ -6,6 +6,7 @@
                 <div @click="choiceTable(queue.tabletype)" class="info">
                     <h3>{{queue.type}}桌</h3>
                     <p>{{queue.info}}</p>
+                    <p style="color: #808080">当前等待{{data.seatFee}}桌</p>
                 </div>
             </yd-flexbox-item>
         </yd-flexbox>

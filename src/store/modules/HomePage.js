@@ -75,8 +75,8 @@ const HomePage = {
       })
     },
     // 加入（修改）购物车
-    [ADD_CAR] ({state, commit, dispatch}, {tableId, productId, amount, openId}) {
-      addCartApi({tableId, productId, amount, openId}).then((resp) => {
+    [ADD_CAR] ({state, commit, dispatch}, {tableId, productId, amount}) {
+      addCartApi({tableId, productId, amount}).then((resp) => {
         console.log(resp.data)
         Toast({
           mes: resp.data.msg,

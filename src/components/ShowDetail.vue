@@ -40,8 +40,7 @@ export default {
       this.addCar({
         tableId: 37,
         productId,
-        amount: this.dishes,
-        openId: 'oOojD1L0z3FdADqZKjv7Y7QV79Gc'
+        amount: this.dishes
       })
     },
     ...mapMutations({

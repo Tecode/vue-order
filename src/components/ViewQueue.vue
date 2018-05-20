@@ -4,7 +4,7 @@
         <yd-icon size='.4rem' color='#16aa6b' name="checkoff"></yd-icon> 已取号
     </div>
     <div class="order">
-        <h1>A310</h1>
+        <h1>{{mapping[data.tableType]}}{{data.queueId}}</h1>
     </div>
     <div class="button">
         <yd-button @click.native="cancelQueue" size="large" type="primary">取消排号</yd-button>
@@ -16,7 +16,8 @@ import { queueStatusApi, cancelQueueApi } from '@/api'
 export default {
   data () {
     return {
-      data: {}
+      data: {},
+      mapping: ['A', 'B', 'C', 'D']
     }
   },
   created () {
@@ -32,6 +33,7 @@ export default {
           timeout: 1500,
           icon: 'success'
         })
+        this.$router.push({path: '/queue'})
       })
     }
   }

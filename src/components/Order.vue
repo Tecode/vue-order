@@ -74,8 +74,7 @@ export default {
         this.changeCar({
           tableId: 37,
           productId,
-          amount,
-          openId: 'oOojD1L0z3FdADqZKjv7Y7QV79Gc'
+          amount
         })
       }
     },

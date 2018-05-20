@@ -22,7 +22,7 @@ export const updateCartApi = (params) => {
 }
 // 加入（修改）购物车
 export const addCartApi = (params) => {
-  return axios.post(`/customer/ordermeal/addCart?openId=${params.openId}&tableId=${params.tableId}&productId=${params.productId}&amount=${params.amount}`)
+  return axios.post(`/customer/ordermeal/addCart?openId=${openId}&tableId=${params.tableId}&productId=${params.productId}&amount=${params.amount}`)
 }
 // 搜索菜品
 export const searchApi = (params) => {
