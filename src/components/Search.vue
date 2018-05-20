@@ -56,7 +56,7 @@ export default {
   },
   created () {
     // 获取购物车信息
-    this.refreshCar({ tableId: 37 })
+    this.refreshCar()
   },
   computed: {
     ...mapState({
@@ -90,8 +90,7 @@ export default {
       this.productDetail = productDetail
     },
     showShopCar () {
-      // 临时的tableId
-      this.refreshCar({ tableId: 37 })
+      this.refreshCar()
       this.setValue({ key: 'showCar', value: true })
     },
     beforeDestroy: function () {

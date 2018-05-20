@@ -42,12 +42,11 @@ export default {
       changeCar: 'ADD_CAR',
       deleteCart: 'DELETE_CARINFO'
     }),
-    changeCount (amount, productId, cartId, tableId) {
+    changeCount (amount, productId, cartId) {
       if (amount === 0) {
-        this.deleteCart({productId, cartId, tableId})
+        this.deleteCart({productId, cartId})
       } else {
         this.changeCar({
-          tableId: 37,
           productId,
           amount
         })

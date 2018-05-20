@@ -51,7 +51,7 @@ export default {
     },
     checkOk () {
       if (this.checked === 0) return
-      choiceeatApi({tableId: 37, peopleNumber: this.checked}).then(({data}) => {
+      choiceeatApi({peopleNumber: this.checked}).then(({data}) => {
         this.$dialog.notify({
           mes: data.msg,
           timeout: 3000
@@ -65,7 +65,7 @@ export default {
     },
     inputNumber () {
       if (!this.inpurtValue) return
-      choiceeatApi({tableId: 37, peopleNumber: this.inpurtValue}).then(({data}) => {
+      choiceeatApi({peopleNumber: this.inpurtValue}).then(({data}) => {
         this.$dialog.notify({
           mes: data.msg,
           timeout: 3000

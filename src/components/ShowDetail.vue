@@ -38,7 +38,6 @@ export default {
   methods: {
     addDishes (productId) {
       this.addCar({
-        tableId: 37,
         productId,
         amount: this.dishes
       })

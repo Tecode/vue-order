@@ -1,7 +1,7 @@
 <template>
   <yd-flexbox class="order-box" direction="vertical">
     <div class="base-info">
-      <h3>桌号:37</h3>
+      <h3>桌号:{{mapping[data.tableType]}}{{data.tableId}}</h3>
       <yd-flexbox class="edit-box" direction="horizontal">
         <yd-flexbox-item class="text-left">
           <div>基本信息</div>
@@ -12,7 +12,7 @@
       <yd-flexbox direction="horizontal">
         <yd-flexbox-item class="text-left">
           <h3>人数</h3>
-          <p>2人</p>
+          <p>{{data.peopleNumber}}人</p>
         </yd-flexbox-item>
         <yd-flexbox-item>
           <h3>下单时间</h3>
@@ -20,7 +20,7 @@
         </yd-flexbox-item>
         <yd-flexbox-item class="text-right">
           <h3>菜品数量</h3>
-          <p>2人</p>
+          <p>{{orderList.length}}份</p>
         </yd-flexbox-item>
       </yd-flexbox>
       <yd-flexbox class="detail" direction="horizontal">
@@ -38,7 +38,7 @@
               x{{item.productAmount}}
             </yd-flexbox-item>
             <yd-flexbox-item>
-              ￥5
+              ¥{{item.productPrice}}
             </yd-flexbox-item>
             <yd-flexbox-item>
               已下厨{{item.orderDetailState}}
@@ -64,7 +64,8 @@ export default {
   data () {
     return {
       orderList: [],
-      data: {}
+      data: {},
+      mapping: ['A', 'B', 'C', 'D']
     }
   },
   computed: {
@@ -74,9 +75,9 @@ export default {
   },
   created () {
     // 获取购物车信息
-    getOrderApi({tableId: 37}).then(({data}) => {
+    getOrderApi().then(({data}) => {
       this.orderList = data.data.orderDetailList
-      this.data = data
+      this.data = data.data
     })
   },
   methods: {

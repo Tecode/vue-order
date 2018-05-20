@@ -29,7 +29,7 @@
                     <p class='count-info'>¥12/份</p>
                 </yd-flexbox-item>
                 <yd-flexbox-item class='text-right'>
-                    <yd-spinner min="0" @click.native="changeCount(item.productAmount, item.productId, item.cartId, item.tableId)" :longpress='false' unit="1" v-model="item.productAmount"></yd-spinner>
+                    <yd-spinner min="0" @click.native="changeCount(item.productAmount, item.productId, item.cartId)" :longpress='false' unit="1" v-model="item.productAmount"></yd-spinner>
                 </yd-flexbox-item>
             </yd-flexbox>
         </yd-flexbox-item>
@@ -55,7 +55,7 @@ export default {
   },
   created () {
     // 获取购物车信息
-    this.refreshCar({ tableId: 37 })
+    this.refreshCar()
   },
   methods: {
     ...mapMutations({
@@ -67,12 +67,11 @@ export default {
       deleteCart: 'DELETE_CARINFO',
       changeCar: 'ADD_CAR'
     }),
-    changeCount (amount, productId, cartId, tableId) {
+    changeCount (amount, productId, cartId) {
       if (amount === 0) {
-        this.deleteCart({productId, cartId, tableId})
+        this.deleteCart({productId, cartId})
       } else {
         this.changeCar({
-          tableId: 37,
           productId,
           amount
         })
@@ -82,7 +81,7 @@ export default {
       this.$router.push({path: '/'})
     },
     getOrder () {
-      placeApi({tableId: 37}).then(({data}) => {
+      placeApi().then(({data}) => {
         if (data.code === 0) {
           this.$router.push({path: '/order-pay'})
         }

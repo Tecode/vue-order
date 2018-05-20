@@ -44,12 +44,12 @@ const HomePage = {
   },
   actions: {
     // 清除购物车
-    [CLEAR_DISHES] ({state, commit, rootState}, tableId) {
+    [CLEAR_DISHES] ({state, commit, rootState}) {
       Confirm({
         title: '清空购物车',
         mes: '确定清空购物车吗?',
         opts: () => {
-          deleteAllCartApi({tableId}).then((resp) => {
+          deleteAllCartApi().then((resp) => {
             Toast({
               mes: resp.data.msg,
               timeout: 1500,
@@ -68,7 +68,7 @@ const HomePage = {
     },
     // 刷新购物车
     [UPDATE_CAR] ({state, commit, rootState}, {tableId}) {
-      updateCartApi({tableId}).then(({data}) => {
+      updateCartApi().then(({data}) => {
         commit('SET_VALUE', {key: 'myShopCar', value: data.data})
       }).catch((err) => {
         console.log(err)

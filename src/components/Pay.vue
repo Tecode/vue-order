@@ -1,37 +1,50 @@
 <template>
-  <div>
+  <div style="width: 100%">
     <yd-flexbox direction="vertical">
       <div class="header">
         <h3>向阳小酒馆</h3>
-        <p>卡1桌2人</p>
-        <h1>¥71.10</h1>
+        <p>{{mapping[data.tableType]}}{{data.tableId}}桌{{data.peopleNumber}}人</p>
+        <h1>¥{{data.orderMoney && data.orderMoney.toFixed(2)}}</h1>
       </div>
       <yd-flexbox-item style="overflow-y: auto">
         <yd-preview style="padding: .3rem 0" :buttons="[]">
-          <yd-preview-item>
-            <div slot="left">商品</div>
-            <div slot="right">啦啦啦啦啦啦啦</div>
-          </yd-preview-item>
-          <yd-preview-item>
-            <div slot="left">商品</div>
-            <div slot="right">啦啦啦啦啦啦啦</div>
-          </yd-preview-item>
-          <yd-preview-item>
-            <div slot="left">商品商品</div>
-            <div slot="right">啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦</div>
+          <yd-preview-item v-for="(item, key) in orderList" :key="key">
+            <div slot="left">{{item.productName}}</div>
+            <div slot="right">¥{{item.productPrice}} x{{item.productAmount}}</div>
           </yd-preview-item>
         </yd-preview>
       </yd-flexbox-item>
-      <yd-button style="margin-bottom: .4rem" size="large" type="primary">立即支付</yd-button>
+      <yd-button size="large" @click.native="wechatPay" type="primary">¥{{data.orderMoney && data.orderMoney.toFixed(2)}}（微信支付）</yd-button>
     </yd-flexbox>
   </div>
 </template>
 
 <script type="text/babel">
+import { getOrderApi, payApi } from '@/api'
 export default {
   data () {
     return {
-      btns: []
+      orderList: [],
+      data: {},
+      btns: [],
+      mapping: ['A', 'B', 'C', 'D']
+    }
+  },
+  created () {
+    // 获取购物车信息
+    getOrderApi().then(({data}) => {
+      this.orderList = data.data.orderDetailList
+      this.data = data.data
+    })
+  },
+
+  methods: {
+    wechatPay () {
+      payApi({orderId: this.data.orderTotalId}).then(({data}) => {
+        console.log(data)
+      }).catch(err => {
+        console.log(err)
+      })
     }
   }
 }
