@@ -77,3 +77,7 @@ export const cancelQueueApi = () => {
 export const payApi = ({orderId}) => {
   return axios.get(`/pay/create?openId=${openId}&orderId=${orderId}`)
 }
+// 查看商家排队信息
+export const queueApi = () => {
+  return axios.get(`/customer/queue/list`)
+}

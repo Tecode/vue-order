@@ -1,12 +1,12 @@
 <template>
     <div v-title="'餐厅详情'" class="queue-box">
         <h2>排号</h2>
-        <yd-flexbox style='margin-top: .5rem' v-for='(item, key) in list' :key='key'>
+        <yd-flexbox style='margin-top: .5rem' v-for='(item, key) in queues' :key='key'>
             <yd-flexbox-item v-for='(queue, key1) in item' :key='key1'>
-                <div @click="choiceTable(queue.tabletype)" class="info">
-                    <h3>{{queue.type}}桌</h3>
-                    <p>{{queue.info}}</p>
-                    <p style="color: #808080">当前等待{{data.seatFee}}桌</p>
+                <div @click="choiceTable(queue.tableType)" class="info">
+                    <h3>{{types[queue.tableType]}}桌</h3>
+                    <p>{{info[queue.tableType]}}</p>
+                    <p style="color: #808080">当前等待{{queue.peopleNumber}}桌</p>
                 </div>
             </yd-flexbox-item>
         </yd-flexbox>
@@ -17,33 +17,13 @@
     </div>
 </template>
 <script>
-import { getSettingInfoApi, applyTableApi } from '@/api'
+import { getSettingInfoApi, applyTableApi, queueApi } from '@/api'
 export default {
   data () {
     return {
-      list: [[
-        {
-          type: 'A',
-          tabletype: 0,
-          info: '1-2人'
-        },
-        {
-          type: 'B',
-          tabletype: 1,
-          info: '3-4人'
-        }
-      ], [
-        {
-          type: 'C',
-          tabletype: 2,
-          info: '5-8人'
-        },
-        {
-          type: 'D',
-          tabletype: 3,
-          info: '8人以上'
-        }
-      ]],
+      queues: [],
+      types: ['A', 'B', 'C', 'D'],
+      info: ['1-2人', '3-4人', '5-8人', '8人以上'],
       data: {}
     }
   },
@@ -68,6 +48,17 @@ export default {
   created () {
     getSettingInfoApi().then(({data}) => {
       this.data = data.data
+    }).catch(err => {
+      console.log(err)
+    })
+    queueApi().then(({data}) => {
+      let newArr = []
+      for (let index = 0; index < data.data.length; index += 2) {
+        newArr = [...newArr, [data.data[index], data.data[index + 1]]]
+      }
+      this.queues = newArr
+    }).catch(err => {
+      console.log(err)
     })
   }
 }
