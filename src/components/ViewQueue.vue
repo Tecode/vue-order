@@ -7,10 +7,36 @@
         <h1>A310</h1>
     </div>
     <div class="button">
-        <yd-button size="large" type="primary">取消排号</yd-button>
+        <yd-button @click.native="cancelQueue" size="large" type="primary">取消排号</yd-button>
     </div>
     </div>
 </template>
+<script>
+import { queueStatusApi, cancelQueueApi } from '@/api'
+export default {
+  data () {
+    return {
+      data: {}
+    }
+  },
+  created () {
+    queueStatusApi().then(({data}) => {
+      this.data = data.data
+    })
+  },
+  methods: {
+    cancelQueue () {
+      cancelQueueApi().then(({data}) => {
+        this.$dialog.toast({
+          mes: data.msg,
+          timeout: 1500,
+          icon: 'success'
+        })
+      })
+    }
+  }
+}
+</script>
 <style scoped>
 .view-box {
     width: 100%;

@@ -3,19 +3,20 @@
         <h2>排号</h2>
         <yd-flexbox style='margin-top: .5rem' v-for='(item, key) in list' :key='key'>
             <yd-flexbox-item v-for='(queue, key1) in item' :key='key1'>
-                <div class="info">
+                <div @click="choiceTable(queue.tabletype)" class="info">
                     <h3>{{queue.type}}桌</h3>
                     <p>{{queue.info}}</p>
                 </div>
             </yd-flexbox-item>
         </yd-flexbox>
         <div class="conect">
-            <p>取号规则</p>
-            <p>联系电话</p>
+            <p>取号规则:{{data.queueDescription}}</p>
+            <p><a :href="'tel:'+data.shopTel">联系电话:{{data.shopTel}}</a></p>
         </div>
     </div>
 </template>
 <script>
+import { getSettingInfoApi, applyTableApi } from '@/api'
 export default {
   data () {
     return {
@@ -41,8 +42,32 @@ export default {
           tabletype: 3,
           info: '8人以上'
         }
-      ]]
+      ]],
+      data: {}
     }
+  },
+  methods: {
+    choiceTable (tableType) {
+      applyTableApi({tableType}).then(({data}) => {
+        this.$dialog.alert({
+          mes: data.msg,
+          callback: () => {
+            this.$router.push({path: '/view-queue'})
+          }
+        })
+      }).catch(() => {
+        this.$dialog.toast({
+          mes: '出错了',
+          timeout: 1500,
+          icon: 'error'
+        })
+      })
+    }
+  },
+  created () {
+    getSettingInfoApi().then(({data}) => {
+      this.data = data.data
+    })
   }
 }
 </script>

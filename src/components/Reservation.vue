@@ -54,7 +54,6 @@ export default {
   },
   created () {
     reservationApi().then(({data}) => {
-      console.log(this.modifyArr(data.data.today), '>>>>>>>>')
       this.today = this.modifyArr(data.data.today)
       this.tomorrow = this.modifyArr(data.data.tomorrow)
       this.theDayAfterTomorrow = this.modifyArr(data.data.theDayAfterTomorrow)
