@@ -9,7 +9,7 @@
                 <yd-flexbox class="counting">
                     <yd-flexbox-item class="count">选择数量</yd-flexbox-item>
                     <yd-flexbox-item class="text-right">
-                        <yd-spinner min="0" unit="1" v-model="homePage.dishes"></yd-spinner>
+                        <yd-spinner min="0" unit="1" v-model="dishes"></yd-spinner>
                     </yd-flexbox-item>
                 </yd-flexbox>
                 <yd-flexbox class="button-info">
@@ -26,12 +26,15 @@
 <script>
 import {mapMutations, mapState, mapActions} from 'vuex'
 export default {
+  data () {
+    return {
+      dishes: 1
+    }
+  },
   name: 'ShowDetail',
   props: ['productDetail'],
   computed: {
     ...mapState({
-      homePage: state => state.HomePage,
-      dishes: state => state.HomePage.dishes,
       showDetail: state => state.HomePage.showDetail
     })
   },
@@ -48,6 +51,11 @@ export default {
     ...mapActions({
       addCar: 'ADD_CAR'
     })
+  },
+  watch: {
+    showDetail () {
+      this.dishes = 1
+    }
   }
 }
 </script>

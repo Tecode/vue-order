@@ -23,7 +23,6 @@ const HomePage = {
   state: {
     showCar: false,
     showDetail: false,
-    dishes: 1,
     myShopCar: []
   },
   mutations: {
