@@ -2,34 +2,38 @@
     <div v-title="'在线预约'" class="cell-box">
         <h3 class="header">酒阳蒸经(观音桥店)</h3>
         <yd-cell-group>
-            <yd-cell-item arrow>
-                <span slot="left">时间：</span>
-                <yd-datetime type="datetime" v-model="datetime" slot="right"></yd-datetime>
+            <yd-cell-item>
+              <span slot="left">时间:</span>
+              <span slot="right">{{queryData.reservationDay}} {{queryData.day}} {{queryData.reservationTime && queryData.reservationTime.slice(0, 5)}}</span>
             </yd-cell-item>
             <yd-cell-item>
-                <span slot="left">人数</span>
+                <span slot="left">人数:</span>
                 <span slot="right">
-                <yd-spinner min="1" unit="1" v-model="people"></yd-spinner>
+                <yd-spinner v-if="!queryData.reservationId" min="1" unit="1" v-model="people"></yd-spinner>
+                <yd-spinner v-if="queryData.reservationId" min="1" unit="1" :readonly="true" v-model="queryData.peopleNumber"></yd-spinner>
             </span>
             </yd-cell-item>
             <yd-cell-item>
                 <span slot="left">手机：</span>
-                <input slot="right" v-model="phone" type="number" placeholder="请输入手机号">
+                <input v-if="!queryData.reservationId" slot="right" v-model="phone" type="number" placeholder="请输入手机号">
+                <span v-if="queryData.reservationId" slot="right">{{queryData.phone}}</span>
             </yd-cell-item>
-            <div class="status">预约状态:已提交</div>
+            <div v-if="data.reservationId" class="status">预约状态:已提交</div>
         </yd-cell-group>
-        <yd-button @click.native="submitApply" class="button" size="large" type="danger">立即预约</yd-button>
+        <yd-button v-if="!queryData.reservationId" @click.native="submitApply" class="button" size="large" type="danger">立即预约</yd-button>
+        <yd-button v-if="queryData.reservationId" @click.native="cancleApply" class="button" size="large" type="danger">取消预约</yd-button>
     </div>
 </template>
 <script>
-import moment from 'moment'
-import { applyApi } from '@/api'
+// import moment from 'moment'
+import { applyApi, getReservationInfoApi, cancelQueueApi } from '@/api'
 export default {
   data () {
     return {
-      datetime: moment().format('YYYY-MM-DD HH:mm'),
+      queryData: {},
       people: 1,
-      phone: ''
+      phone: '',
+      data: {}
     }
   },
   methods: {
@@ -41,20 +45,31 @@ export default {
         })
       } else {
         applyApi({
-          openId: 'oOojD1L0z3FdADqZKjv7Y7QV79Gc',
           peopleNumber: this.people,
           phone: this.phone,
-          time: moment(this.datetime).format('HH:mm'),
-          date: moment(this.datetime).format('YYYY-MM-DD')}).then(({data}) => {
-          this.$dialog.toast({
-            mes: data.msg,
-            timeout: 1500,
-            icon: 'error'
-          })
+          reservationTimeId: this.queryData.reservationTimeId}).then(({data}) => {
+          this.$dialog.toast({mes: data.msg, timeout: 1000})
+          this.queryData = data.data
+          this.$router.push({path: '/apply'})
         }).catch(err => {
           console.log(err)
         })
       }
+    },
+    cancleApply () {
+      cancelQueueApi().then(({data}) => {
+        this.$dialog.toast({mes: data.msg, timeout: 1000})
+        this.$router.push({path: '/reservation'})
+      })
+    }
+  },
+  created () {
+    if (this.$route.query.day) {
+      this.queryData = this.$route.query
+    } else {
+      getReservationInfoApi().then(({data}) => {
+        this.queryData = data.data
+      })
     }
   }
 }

@@ -38,11 +38,11 @@ export const reservationApi = (params) => {
 }
 // 申请一个预约
 export const applyApi = (params) => {
-  return axios.post(`/customer/reservation/apply?openId=${params.openId}&date=${params.date}&time=${params.time}&peopleNumber=${params.peopleNumber}&phone=${params.phone}`)
+  return axios.post(`/customer/reservation/apply?openId=${openId}&reservationTimeId=${params.reservationTimeId}&peopleNumber=${params.peopleNumber}&phone=${params.phone}`)
 }
 // 查看我的预约
-export const getReservationInfoApi = (params) => {
-  return axios.get(`/customer/reservation/info?openId=${params.openId}`)
+export const getReservationInfoApi = () => {
+  return axios.get(`/customer/reservation/info?openId=${openId}`)
 }
 // 删除一条购物车信息
 export const deleteCartApi = (params) => {
