@@ -48,6 +48,7 @@
 import { getProductListApi } from '@/api'
 import ShowDetail from './ShowDetail'
 import ShowCar from './ShowCar'
+import Cookies from 'js-cookie'
 import {mapMutations, mapState, mapActions} from 'vuex'
 export default {
   data () {
@@ -69,6 +70,7 @@ export default {
       .catch(err => {
         console.log(err)
       })
+    Cookies.set('tableId', this.$route.query.tableId, { expires: 7, path: '' })
     // 获取购物车信息
     this.refreshCar()
   },

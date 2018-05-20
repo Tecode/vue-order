@@ -1,24 +1,25 @@
 import axios from 'axios'
+import Cookies from 'js-cookie'
 
 axios.defaults.baseURL = 'http://120.78.165.70'
 axios.defaults.headers.common['Authorization'] = 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJyb2xlIjoiMjAxOCIsInVuaXF1ZV9uYW1lIjoiMjAxOCIsInVzZXJpZCI6IjIwMTgiLCJpc3MiOiJyZXN0YXBpdXNlciIsImF1ZCI6IjA5OGY2YmNkNDYyMWQzNzNjYWRlNGU4MzI2MjdiNGY2IiwiZXhwIjoxNTI2OTYwNjEzLCJuYmYiOjE1MjY3ODc4MTN9.NhRUDwOLxuLLgUiAcR9cjZlqaeqGLNKnfqDGc0_dUZU'
-const openId = 'oOojD1L0z3FdADqZKjv7Y7QV79Gc'
-const tableId = 37
+const openId = Cookies.get('openId') || 'oOojD1L0z3FdADqZKjv7Y7QV79Gc'
+const tableId = Cookies.get('tableId')
 // 查看商品列表
 export const getProductListApi = () => {
   return axios.get('/customer/ordermeal/list')
 }
 // 获取最新的购物车信息
 export const getCartInfoApi = () => {
-  return axios.get('/customer/ordermeal/updateCart')
+  return axios.get(`/customer/ordermeal/updateCart?tableId=${tableId}`)
 }
 // 清除购物车
 export const deleteAllCartApi = (params) => {
   return axios.post(`/customer/ordermeal/deleteAllCart?tableId=${tableId}`)
 }
 // 刷新购物车
-export const updateCartApi = (params) => {
-  return axios.get('/customer/ordermeal/updateCart', {params})
+export const updateCartApi = () => {
+  return axios.get(`/customer/ordermeal/updateCart?tableId=${tableId}`)
 }
 // 加入（修改）购物车
 export const addCartApi = (params) => {

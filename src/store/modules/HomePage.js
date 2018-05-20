@@ -67,7 +67,7 @@ const HomePage = {
       })
     },
     // 刷新购物车
-    [UPDATE_CAR] ({state, commit, rootState}, {tableId}) {
+    [UPDATE_CAR] ({state, commit, rootState}) {
       updateCartApi().then(({data}) => {
         commit('SET_VALUE', {key: 'myShopCar', value: data.data})
       }).catch((err) => {
@@ -75,8 +75,8 @@ const HomePage = {
       })
     },
     // 加入（修改）购物车
-    [ADD_CAR] ({state, commit, dispatch}, {tableId, productId, amount}) {
-      addCartApi({tableId, productId, amount}).then((resp) => {
+    [ADD_CAR] ({state, commit, dispatch}, {productId, amount}) {
+      addCartApi({productId, amount}).then((resp) => {
         console.log(resp.data)
         Toast({
           mes: resp.data.msg,
@@ -84,7 +84,7 @@ const HomePage = {
           icon: 'success'
         })
         // 重新请求购物车信息
-        dispatch('UPDATE_CAR', {tableId})
+        dispatch('UPDATE_CAR')
         commit('SET_VALUE', {key: 'showDetail', value: false})
       }).catch((err) => {
         console.log(err)
