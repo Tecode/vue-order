@@ -5,14 +5,16 @@
             <p v-if="list.length == 0" class="text-aligin:center">暂无数据</p>
             <yd-list :theme='3'>
                 <yd-list-item v-for='product in list' :key='product.id'>
-                    <img slot='img' :src='product.icon' @click='showDetail(product)' />
+                  <img v-if="product.state === 0" slot='img' :src='product.icon' @click='showDetail(product)' />
+                  <img v-if="product.state === 1" slot='img' :src='product.icon' />
                     <yd-list-other slot='other'>
                         <div style='width:100%'>
                             <div class='info'>
                                 <p class='list-name'>{{product.name}}</p>
                                 <p class='list-price'>¥{{product.price}}</p>
                             </div>
-                            <button @click='showDetail(product)' class='add-product'>添加</button>
+                          <button v-if="product.state === 0" @click='showDetail(product)' class='add-product'>添加</button>
+                          <button v-if="product.state === 1" class='disabled-product'>告罄</button>
                         </div>
                     </yd-list-other>
                 </yd-list-item>
@@ -136,6 +138,15 @@ a {
   padding: 0.1rem 0;
   border-radius: 4px;
   color: #ef4f4f;
+}
+.disabled-product {
+  display: block;
+  text-align: center;
+  width: 100%;
+  border: 1px solid #808080;
+  padding: 0.1rem 0;
+  border-radius: 4px;
+  color: #808080;
 }
 .info {
   height: 0.8rem;

@@ -18,6 +18,7 @@
       </yd-flexbox-item>
       <yd-button size="large" @click.native="wechatPay" type="primary">¥{{data.orderMoney && data.orderMoney.toFixed(2)}}（微信支付）</yd-button>
     </yd-flexbox>
+    <div v-html="script"></div>
   </div>
 </template>
 
@@ -29,7 +30,8 @@ export default {
       orderList: [],
       data: {},
       btns: [],
-      mapping: ['A', 'B', 'C', 'D']
+      mapping: ['A', 'B', 'C', 'D'],
+      script: ''
     }
   },
   created () {
@@ -42,10 +44,14 @@ export default {
 
   methods: {
     wechatPay () {
-      payApi({orderId: this.data.orderTotalId}).then(({data}) => {
-        console.log(data)
-      }).catch(err => {
-        console.log(err)
+      payApi({orderId: '1234152570573995678'}).then(({data}) => {
+        this.script = data
+      }).catch(() => {
+        this.$dialog.toast({
+          mes: '支付失败',
+          timeout: 1500,
+          icon: 'error'
+        })
       })
     }
   }
