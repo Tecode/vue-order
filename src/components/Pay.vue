@@ -16,14 +16,15 @@
           </yd-preview-item>
         </yd-preview>
       </yd-flexbox-item>
-      <yd-button size="large" @click.native="wechatPay" type="primary">¥{{data.orderMoney && data.orderMoney.toFixed(2)}}（微信支付）</yd-button>
+      <yd-button style="margin-top: 0" size="large" @click.native="wechatPay" type="primary">¥{{data.orderMoney && data.orderMoney.toFixed(2)}}（微信支付）</yd-button>
     </yd-flexbox>
     <div v-html="script"></div>
   </div>
 </template>
 
 <script type="text/babel">
-import { getOrderApi, payApi } from '@/api'
+import { getOrderApi } from '@/api'
+import Cookies from 'js-cookie'
 export default {
   data () {
     return {
@@ -44,15 +45,7 @@ export default {
 
   methods: {
     wechatPay () {
-      payApi({orderId: '1234152570573995678'}).then(({data}) => {
-        this.script = data
-      }).catch(() => {
-        this.$dialog.toast({
-          mes: '支付失败',
-          timeout: 1500,
-          icon: 'error'
-        })
-      })
+      window.location.href = `http://order.voltmao.com/api/pay/create?openId=${Cookies.get('openId') || 'oOojD1L0z3FdADqZKjv7Y7QV79Gc'}&orderId=${this.data.orderTotalId}`
     }
   }
 }

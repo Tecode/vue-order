@@ -84,6 +84,8 @@ export default {
       placeApi().then(({data}) => {
         if (data.code === 0) {
           this.$router.push({path: '/order-pay'})
+        } else {
+          this.$dialog.toast({mes: data.msg, timeout: 1000})
         }
       }).catch(err => {
         console.log(err)

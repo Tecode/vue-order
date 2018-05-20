@@ -72,7 +72,7 @@ export default {
       .catch(err => {
         console.log(err)
       })
-    Cookies.set('tableId', this.$route.query.tableId, { expires: 7, path: '' })
+    Cookies.set('tableId', this.$route.query.tableId)
     // 获取购物车信息
     this.refreshCar()
   },
