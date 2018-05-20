@@ -16,7 +16,7 @@
         </yd-flexbox-item>
         <yd-flexbox-item>
           <h3>下单时间</h3>
-          <p>15：20</p>
+          <p>{{time}}</p>
         </yd-flexbox-item>
         <yd-flexbox-item class="text-right">
           <h3>菜品数量</h3>
@@ -41,7 +41,7 @@
               ¥{{item.productPrice}}
             </yd-flexbox-item>
             <yd-flexbox-item>
-              已下厨{{item.orderDetailState}}
+              {{status[item.orderDetailState]}}
            </yd-flexbox-item>
           </yd-flexbox>
       </yd-flexbox-item>
@@ -59,13 +59,16 @@
 </template>
 <script>
 import { mapMutations, mapState, mapActions } from 'vuex'
+import moment from 'moment'
 import { getOrderApi } from '@/api'
 export default {
   data () {
     return {
       orderList: [],
       data: {},
-      mapping: ['A', 'B', 'C', 'D']
+      time: moment().format('YYYY-MM-DD HH:SS'),
+      mapping: ['A', 'B', 'C', 'D'],
+      status: ['已下单', '已下厨', '已上菜']
     }
   },
   computed: {

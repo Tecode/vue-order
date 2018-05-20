@@ -2,7 +2,7 @@
   <div style="width: 100%">
     <yd-flexbox direction="vertical">
       <div class="header">
-        <h3>向阳小酒馆</h3>
+        <!--<h3>向阳小酒馆</h3>-->
         <p>{{mapping[data.tableType]}}{{data.tableId}}桌{{data.peopleNumber}}人</p>
         <h1>¥{{data.orderMoney && data.orderMoney.toFixed(2)}}</h1>
       </div>
@@ -10,7 +10,9 @@
         <yd-preview style="padding: .3rem 0" :buttons="[]">
           <yd-preview-item v-for="(item, key) in orderList" :key="key">
             <div slot="left">{{item.productName}}</div>
-            <div slot="right">¥{{item.productPrice}} x{{item.productAmount}}</div>
+            <div slot="right">¥{{item.productPrice}}
+            <span style="margin-left: .4rem">x{{item.productAmount}}</span>
+            </div>
           </yd-preview-item>
         </yd-preview>
       </yd-flexbox-item>

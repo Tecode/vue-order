@@ -25,7 +25,6 @@
     </div>
 </template>
 <script>
-// import moment from 'moment'
 import { applyApi, getReservationInfoApi, cancelQueueApi } from '@/api'
 export default {
   data () {
