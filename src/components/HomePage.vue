@@ -73,6 +73,7 @@ export default {
         console.log(err)
       })
     webSocketApi()
+    console.log(this.$route.query.tableId, '-----------------..')
     Cookies.set('tableId', this.$route.query.tableId)
     // 获取购物车信息
     this.refreshCar()
