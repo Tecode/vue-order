@@ -70,7 +70,7 @@ export const queueStatusApi = () => {
   return axios.get(`/customer/queue/status?openId=${openId}`)
 }
 // 取消预约
-export const cancelQueueApi = () => {
+export const cancelReservationApi = () => {
   return axios.post(`/customer/reservation/cancel?openId=${openId}`)
 }
 // 发起微信支付
@@ -80,4 +80,8 @@ export const payApi = ({orderId}) => {
 // 查看商家排队信息
 export const queueApi = () => {
   return axios.get(`/customer/queue/list`)
+}
+// 取消排队
+export const cancelQueueApi = () => {
+  return axios.post(`/customer/queue/cancel?openId=${openId}`)
 }

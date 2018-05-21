@@ -5,6 +5,8 @@
     </div>
     <div class="order">
         <h1>{{mapping[data.tableType]}}{{data.queueId}}</h1>
+        <p class="time-info">排队开始时间: {{startTime}}</p>
+        <p class="time-info">前面还有: {{data.waitNumber}}位</p>
     </div>
     <div class="button">
         <yd-button @click.native="cancelQueue" size="large" type="primary">取消排号</yd-button>
@@ -13,16 +15,19 @@
 </template>
 <script>
 import { queueStatusApi, cancelQueueApi } from '@/api'
+import moment from 'moment'
 export default {
   data () {
     return {
       data: {},
-      mapping: ['A', 'B', 'C', 'D']
+      mapping: ['A', 'B', 'C', 'D'],
+      startTime: ''
     }
   },
   created () {
     queueStatusApi().then(({data}) => {
       this.data = data.data
+      this.startTime = moment(data.data.startTime).format('HH:MM')
     })
   },
   methods: {
@@ -46,7 +51,7 @@ export default {
 .order {
     width: 50%;
     margin: auto;
-    padding: .8rem 0;
+    padding: .8rem 0 .4rem 0;
     background-color: #ffffff;
     border: 1px solid #dedede;
     border-radius: 6px;
@@ -63,5 +68,10 @@ export default {
     background-color: #ffffff;
     border-bottom: 1px solid #dedede;
     margin-bottom: .8rem;
+}
+.time-info {
+   text-align: left;
+    padding: 0 .2rem;
+    padding-top: .1rem;
 }
 </style>

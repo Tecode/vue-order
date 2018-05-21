@@ -25,7 +25,7 @@
     </div>
 </template>
 <script>
-import { applyApi, getReservationInfoApi, cancelQueueApi } from '@/api'
+import { applyApi, getReservationInfoApi, cancelReservationApi } from '@/api'
 export default {
   data () {
     return {
@@ -56,7 +56,7 @@ export default {
       }
     },
     cancleApply () {
-      cancelQueueApi().then(({data}) => {
+      cancelReservationApi().then(({data}) => {
         this.$dialog.toast({mes: data.msg, timeout: 1000})
         this.$router.push({path: '/reservation'})
       })

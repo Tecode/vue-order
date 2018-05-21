@@ -6,6 +6,7 @@
                 <div style='height:5rem;overflow:hidden'>
                   <img :src='productDetail.icon' />
                 </div>
+                <p style="text-align: left; padding: .1rem;color: #808080">{{productDetail.description}}</p>
                 <yd-flexbox class="counting">
                     <yd-flexbox-item class="count">选择数量</yd-flexbox-item>
                     <yd-flexbox-item class="text-right">
