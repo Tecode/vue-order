@@ -1,6 +1,6 @@
 <template>
     <div class='flex-box'>
-        <yd-search v-model="value1" placeholder="请输入菜品名或口味" :on-submit="submitHandler"></yd-search>
+        <yd-search v-model="value" placeholder="请输入菜品名或口味" cancel-text="确定" :on-cancel="submitHandler" :on-submit="submitHandler"></yd-search>
         <div :class="[list.length == 0 ? 'item-center list-box' : 'list-box']">
             <p v-if="list.length == 0" class="text-aligin:center">暂无数据</p>
             <yd-list :theme='3'>
@@ -29,7 +29,7 @@
                         </span>
                 </yd-flexbox-item>
                 <yd-flexbox-item class='text-right'>
-                    <yd-button type='danger'>选好了</yd-button>
+                    <yd-button @click.native="linkOrder" type='danger'>选好了</yd-button>
                 </yd-flexbox-item>
             </yd-flexbox>
         </div>
@@ -49,7 +49,8 @@ export default {
     return {
       list: [],
       productDetail: {},
-      visible: false
+      visible: false,
+      value: ''
     }
   },
   components: {
@@ -74,9 +75,9 @@ export default {
     ...mapActions({
       refreshCar: 'UPDATE_CAR'
     }),
-    submitHandler (value) {
+    submitHandler () {
       this.$dialog.loading.open('正在搜索')
-      searchApi({name: value})
+      searchApi({name: this.value})
         .then(({ data }) => {
           this.list = data.data
           this.$dialog.loading.close()
@@ -97,6 +98,9 @@ export default {
     },
     beforeDestroy: function () {
       this.resetStore()
+    },
+    linkOrder () {
+      this.$router.push({path: '/order'})
     }
   }
 }

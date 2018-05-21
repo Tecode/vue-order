@@ -2,7 +2,7 @@
     <yd-flexbox class="order-box" direction="vertical">
         <div class="base-info">
             <h3>桌号:{{mapping[orderData.tableType]}}{{orderData.tableId}}</h3>
-            <p>{{myShopCar.length}}个菜</p>
+            <p>菜品种类:{{myShopCar.length}}种</p>
             <yd-flexbox class="edit-box" direction="horizontal">
                 <yd-flexbox-item class="text-left">
                     <div>用餐人数: {{orderData.peopleNumber}}人</div>
@@ -69,7 +69,8 @@ export default {
       inpurtValue: '',
       orderData: {},
       mapping: ['A', 'B', 'C', 'D'],
-      status: ['已下单', '已下厨', '已上菜']
+      status: ['已下单', '已下厨', '已上菜'],
+      total: 0
     }
   },
   computed: {

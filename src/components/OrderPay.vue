@@ -2,11 +2,6 @@
   <yd-flexbox class="order-box" direction="vertical">
     <div class="base-info">
       <h3>桌号:{{mapping[data.tableType]}}{{data.tableId}}</h3>
-      <yd-flexbox class="edit-box" direction="horizontal">
-        <yd-flexbox-item class="text-left">
-          <div>基本信息</div>
-        </yd-flexbox-item>
-      </yd-flexbox>
     </div>
     <yd-flexbox-item class="order-detail">
       <yd-flexbox direction="horizontal">
