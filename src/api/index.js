@@ -89,7 +89,7 @@ export const updateSeatApi = ({peopleNumber}) => {
   return axios.post(`/customer/ordermeal/updateSeat?tableId=${Cookies.get('tableId')}&peopleNumber=${peopleNumber}`)
 }
 // webSocket
-export const webSocketApi = () => {
+export const webSocketApi = (callBack) => {
   var websocket = null
   if ('WebSocket' in window) {
     websocket = new WebSocket(`ws://120.78.165.70/webSocket/cart/${Cookies.get('tableId')}`)
@@ -109,6 +109,7 @@ export const webSocketApi = () => {
     // 根据 event.data 来做出相应的动作，比如刷新或者跳转
     if (event.data === 'updateCart') {
       // 更新购物车
+      callBack()
       console.log('==========updateCart')
     } else if (event.data === 'placed') {
       // 跳转到订单页面
