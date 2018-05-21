@@ -29,18 +29,24 @@
 </template>
 <script>
 import { choiceeatApi } from '@/api'
+import Cookies from 'js-cookie'
 export default {
   data () {
     return {
       checked: 0,
       inpurtValue: '',
       show: false,
+      tableId: '',
       buttonList: [
         [1, 2, 3, 4],
         [5, 6, 7, 8],
         [9, 10, 11, '...']
       ]
     }
+  },
+  created () {
+    this.tableId = this.$route.query.tableId
+    Cookies.set('tableId', this.$route.query.tableId)
   },
   methods: {
     checkSeat (value) {
@@ -56,11 +62,9 @@ export default {
           mes: data.msg,
           timeout: 3000
         })
+        this.$router.push({path: '/', query: { tableId: this.tableId }})
       }).catch((err) => {
-        this.$dialog.notify({
-          mes: err.response.msg,
-          timeout: 3000
-        })
+        console.log(err)
       })
     },
     inputNumber () {
@@ -70,6 +74,7 @@ export default {
           mes: data.msg,
           timeout: 3000
         })
+        this.$router.push({path: '/', query: { tableId: this.tableId }})
       }).catch((err) => {
         this.$dialog.notify({
           mes: err.response.msg,

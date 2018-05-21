@@ -91,14 +91,40 @@ export const updateSeatApi = ({peopleNumber}) => {
 }
 // webSocket
 export const webSocketApi = () => {
-  let websocket = null
-  // 判断当前浏览器是否支持WebSocket
+  var websocket = null
   if ('WebSocket' in window) {
     websocket = new WebSocket(`ws://120.78.165.70/webSocket/cart/${tableId}`)
   } else {
-    alert('当前浏览器 Not support websocket')
+    alert('浏览器不支持')
   }
-  websocket.onopen = function () {
-    console.log('WebSocket连接成功')
+
+  websocket.onopen = function (event) {
+    console.log('建立连接')
+  }
+
+  websocket.onclose = function (event) {
+    console.log('连接关闭')
+  }
+
+  websocket.onmessage = function (event) {
+    // 根据 event.data 来做出相应的动作，比如刷新或者跳转
+    if (event.data === 'updateCart') {
+      // 更新购物车
+      console.log('==========updateCart')
+    } else if (event.data === 'placed') {
+      // 跳转到订单页面
+      window.location.href = '/#/order-pay'
+    } else if (event.data === 'paid') {
+      // 跳转到已支付页面（直接跳转到这个链接 http://order.voltmao.com/api/pay/success.html 就行）
+      window.location.href = 'http://order.voltmao.com/api/pay/success.html'
+    }
+  }
+
+  websocket.onerror = function (event) {
+    console.log('连接关闭')
+  }
+
+  window.onbeforeunload = function () {
+    websocket.close()
   }
 }

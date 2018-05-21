@@ -100,7 +100,7 @@ export default {
       this.setValue({key: 'showCar', value: true})
     },
     linkPage () {
-      this.$router.push({path: '/search', query: { name: 'private' }})
+      this.$router.push({path: '/search'})
     },
     linkOrder () {
       this.$router.push({path: '/order'})
