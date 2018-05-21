@@ -25,8 +25,17 @@
             </yd-flexbox>
             <yd-flexbox v-for='(item, key) in myShopCar' :key="key" class='count-box'>
                 <yd-flexbox-item class='text-left'>
-                    <p class='name' @click='setValue("showCar", false)'>{{item.productName}}</p>
-                    <p class='count-info'>¥12/份</p>
+                    <yd-flexbox>
+                        <yd-flexbox-item>
+                            <div style="width: .8rem;height: .8rem;overflow: hidden;border-radius: 999px">
+                                <img width="100%" :src="item.headImgUrl"/>
+                            </div>
+                        </yd-flexbox-item>
+                        <yd-flexbox-item>
+                            <p class='name' @click='setValue("showCar", false)'>{{item.productName}}</p>
+                            <p class='count-info'>¥{{item.productPrice}}/份</p>
+                        </yd-flexbox-item>
+                    </yd-flexbox>
                 </yd-flexbox-item>
                 <yd-flexbox-item class='text-right'>
                     <yd-spinner min="0" @click.native="changeCount(item.productAmount, item.productId, item.cartId)" :longpress='false' unit="1" v-model="item.productAmount"></yd-spinner>
