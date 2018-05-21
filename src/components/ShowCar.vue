@@ -6,24 +6,26 @@
             <p class='close' @click='setValue({key: "showCar", value: false})'>
                 <yd-icon name="error-outline" size='.4rem'></yd-icon>关闭</p>
         </div>
-        <yd-flexbox v-for='(item, key) in myShopCar' :key="key" class='count-box'>
-            <yd-flexbox-item class='text-left'>
-                <yd-flexbox>
-                    <yd-flexbox-item>
-                        <div style="width: .8rem;height: .8rem;overflow: hidden;border-radius: 999px">
-                            <img width="100%" :src="item.headImgUrl"/>
-                        </div>
-                    </yd-flexbox-item>
-                    <yd-flexbox-item>
-                        <p class='name' @click='setValue("showCar", false)'>{{item.productName}}</p>
-                        <p class='count-info'>¥{{item.productPrice}}/份</p>
-                    </yd-flexbox-item>
-                </yd-flexbox>
-            </yd-flexbox-item>
-            <yd-flexbox-item class='text-right'>
-              <yd-spinner min="0" :longpress='false' unit="1" @click.native="changeCount(item.productAmount, item.productId, item.cartId, item.tableId)" v-model="item.productAmount"></yd-spinner>
-            </yd-flexbox-item>
-        </yd-flexbox>
+        <div class="box">
+            <yd-flexbox v-for='(item, key) in myShopCar' :key="key" class='count-box'>
+                <yd-flexbox-item class='text-left'>
+                    <yd-flexbox>
+                        <yd-flexbox-item>
+                            <div style="width: .8rem;height: .8rem;overflow: hidden;border-radius: 999px">
+                                <img width="100%" :src="item.headImgUrl"/>
+                            </div>
+                        </yd-flexbox-item>
+                        <yd-flexbox-item>
+                            <p class='name' @click='setValue("showCar", false)'>{{item.productName}}</p>
+                            <p class='count-info'>¥{{item.productPrice}}/份</p>
+                        </yd-flexbox-item>
+                    </yd-flexbox>
+                </yd-flexbox-item>
+                <yd-flexbox-item class='text-right'>
+                    <yd-spinner min="0" :longpress='false' unit="1" @click.native="changeCount(item.productAmount, item.productId, item.cartId, item.tableId)" v-model="item.productAmount"></yd-spinner>
+                </yd-flexbox-item>
+            </yd-flexbox>
+        </div>
     </yd-popup>
 </template>
 <script>
@@ -76,8 +78,12 @@ export default {
     }
     .header {
         background-color: #dedede;
-        position: relative;
+        position: fixed;
         padding: .2rem 0;
+        top: 0;
+        left: 0;
+        width: 100%;
+        z-index: 2;
     }
     .header .clear {
         position: absolute;
@@ -90,7 +96,10 @@ export default {
         left: .15rem;
     }
     .count-box {
-        padding: .21rem .4rem .21rem .4rem
+        padding: .21rem .4rem .21rem .4rem;
+    }
+    .box {
+        margin-top: 1rem;
     }
     .name {
         color: #4c4c4c;
