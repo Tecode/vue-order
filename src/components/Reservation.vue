@@ -8,21 +8,24 @@
             <yd-tab-panel label="今天">
                 <yd-flexbox class="reservation-action" v-for="(array, ind) in today" :key="ind">
                     <yd-flexbox-item v-for="(item, key) in array" :key="key" v-if="item.reservationTime">
-                        <h3 @click="linkPage(item, '今天')" :class="[key % 2 === 0 ? 'border-right': '']">{{item.reservationTime}}</h3>
+                        <h3 v-if="item.reservationTimeSwitch" @click="linkPage(item, '今天')" :class="[key % 2 === 0 ? 'border-right': '']">{{item.reservationTime}}</h3>
+                        <h3 v-if="!item.reservationTimeSwitch" style="background-color: #ededed" :class="[key % 2 === 0 ? 'border-right': '']">{{item.reservationTime}}</h3>
                     </yd-flexbox-item>
                 </yd-flexbox>
             </yd-tab-panel>
             <yd-tab-panel label="明天">
                 <yd-flexbox class="reservation-action" v-for="(array, ind) in tomorrow" :key="ind">
                     <yd-flexbox-item v-for="(item, key) in array" :key="key" v-if="item.reservationTime">
-                        <h3 @click="linkPage(item, '明天')" :class="[key % 2 === 0 ? 'border-right': '']">{{item.reservationTime}}</h3>
+                        <h3 v-if="item.reservationTimeSwitch" @click="linkPage(item, '明天')" :class="[key % 2 === 0 ? 'border-right': '']">{{item.reservationTime}}</h3>
+                        <h3 v-if="!item.reservationTimeSwitch" style="background-color: #ededed" :class="[key % 2 === 0 ? 'border-right': '']">{{item.reservationTime}}</h3>
                     </yd-flexbox-item>
                 </yd-flexbox>
             </yd-tab-panel>
             <yd-tab-panel label="后天">
                 <yd-flexbox class="reservation-action" v-for="(array, ind) in theDayAfterTomorrow" :key="ind">
                     <yd-flexbox-item v-for="(item, key) in array" :key="key" v-if="item.reservationTime">
-                        <h3 @click="linkPage(item, '后天')" :class="[key % 2 === 0 ? 'border-right': '']">{{item.reservationTime}}</h3>
+                        <h3 v-if="item.reservationTimeSwitch" @click="linkPage(item, '后天')" :class="[key % 2 === 0 ? 'border-right': '']">{{item.reservationTime}}</h3>
+                        <h3 v-if="!item.reservationTimeSwitch" style="background-color: #ededed" :class="[key % 2 === 0 ? 'border-right': '']">{{item.reservationTime}}</h3>
                     </yd-flexbox-item>
                 </yd-flexbox>
             </yd-tab-panel>

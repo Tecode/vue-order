@@ -55,7 +55,7 @@
 <script>
 import { mapMutations, mapState, mapActions } from 'vuex'
 import moment from 'moment'
-import { getOrderApi } from '@/api'
+import { getOrderApi, webSocketApi } from '@/api'
 export default {
   data () {
     return {
@@ -72,6 +72,7 @@ export default {
     })
   },
   created () {
+    webSocketApi()
     // 获取购物车信息
     getOrderApi().then(({data}) => {
       this.orderList = data.data.orderDetailList

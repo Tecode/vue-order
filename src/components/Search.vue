@@ -40,7 +40,7 @@
 </template>
 
 <script>
-import { searchApi } from '@/api'
+import { searchApi, webSocketApi } from '@/api'
 import ShowDetail from './ShowDetail'
 import ShowCar from './ShowCar'
 import { mapMutations, mapState, mapActions } from 'vuex'
@@ -58,6 +58,7 @@ export default {
     ShowCar
   },
   created () {
+    webSocketApi()
     // 获取购物车信息
     this.refreshCar()
   },

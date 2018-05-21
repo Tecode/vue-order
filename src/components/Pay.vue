@@ -23,7 +23,7 @@
 </template>
 
 <script type="text/babel">
-import { getOrderApi } from '@/api'
+import { getOrderApi, webSocketApi } from '@/api'
 import Cookies from 'js-cookie'
 export default {
   data () {
@@ -36,6 +36,7 @@ export default {
     }
   },
   created () {
+    webSocketApi()
     // 获取购物车信息
     getOrderApi().then(({data}) => {
       this.orderList = data.data.orderDetailList

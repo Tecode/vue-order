@@ -89,3 +89,16 @@ export const cancelQueueApi = () => {
 export const updateSeatApi = ({peopleNumber}) => {
   return axios.post(`/customer/ordermeal/updateSeat?tableId=${tableId}&peopleNumber=${peopleNumber}`)
 }
+// webSocket
+export const webSocketApi = () => {
+  let websocket = null
+  // 判断当前浏览器是否支持WebSocket
+  if ('WebSocket' in window) {
+    websocket = new WebSocket(`ws://120.78.165.70/webSocket/cart/${tableId}`)
+  } else {
+    alert('当前浏览器 Not support websocket')
+  }
+  websocket.onopen = function () {
+    console.log('WebSocket连接成功')
+  }
+}

@@ -61,7 +61,7 @@
 </template>
 <script>
 import { mapMutations, mapState, mapActions } from 'vuex'
-import { placeApi, getOrderApi, updateSeatApi } from '@/api'
+import { placeApi, getOrderApi, updateSeatApi, webSocketApi } from '@/api'
 export default {
   data () {
     return {
@@ -80,6 +80,7 @@ export default {
     })
   },
   created () {
+    webSocketApi()
     // 获取购物车信息
     this.refreshCar()
     // 订单购物车信息

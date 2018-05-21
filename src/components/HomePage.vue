@@ -47,7 +47,7 @@
 </template>
 
 <script>
-import { getProductListApi } from '@/api'
+import { getProductListApi, webSocketApi } from '@/api'
 import ShowDetail from './ShowDetail'
 import ShowCar from './ShowCar'
 import Cookies from 'js-cookie'
@@ -72,6 +72,7 @@ export default {
       .catch(err => {
         console.log(err)
       })
+    webSocketApi()
     Cookies.set('tableId', this.$route.query.tableId)
     // 获取购物车信息
     this.refreshCar()
