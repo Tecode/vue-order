@@ -1,15 +1,15 @@
 <template>
     <yd-flexbox class="order-box" direction="vertical">
         <div class="base-info">
-            <h3>桌号:37</h3>
-            <p>4个菜</p>
+            <h3>桌号:{{mapping[orderData.tableType]}}{{orderData.tableId}}</h3>
+            <p>{{myShopCar.length}}个菜</p>
             <yd-flexbox class="edit-box" direction="horizontal">
                 <yd-flexbox-item class="text-left">
-                    <div>用餐人数: 5人</div>
-                    <p style="line-height:.3rem">备注:少辣椒</p>
+                    <div>用餐人数: {{orderData.peopleNumber}}人</div>
+                    <!--<p style="line-height:.3rem">备注:少辣椒</p>-->
                 </yd-flexbox-item>
                 <yd-flexbox-item class="text-right">
-                    <yd-button type="danger">编辑</yd-button>
+                    <yd-button type="danger" @click.native="editNumber">编辑</yd-button>
                 </yd-flexbox-item>
             </yd-flexbox>
         </div>
@@ -20,7 +20,7 @@
                     <p style="line-height: .2rem;color: #808080">¥3/位</p>
                 </yd-flexbox-item>
                 <yd-flexbox-item class="text-right" style="font-size: .46rem;">
-                    x3
+                    x {{orderData.peopleNumber}}
                 </yd-flexbox-item>
             </yd-flexbox>
             <yd-flexbox v-for='(item, key) in myShopCar' :key="key" class='count-box'>
@@ -41,12 +41,37 @@
                 去下单
             </yd-flexbox-item>
         </yd-flexbox>
+        <yd-popup v-model="show" position="center" width="90%">
+            <div class="popup">
+                <h2>请输入就餐人数</h2>
+                <div class="input-box">
+                    <input v-model="inpurtValue" autofocus placeholder="请输入就餐人数" />
+                </div>
+                <yd-flexbox class="button-info">
+                    <yd-flexbox-item class="count">
+                        <yd-button @click.native="show = false" >关 闭</yd-button>
+                    </yd-flexbox-item>
+                    <yd-flexbox-item>
+                        <yd-button @click.native="inputNumber" type="danger">确 定</yd-button>
+                    </yd-flexbox-item>
+                </yd-flexbox>
+            </div>
+        </yd-popup>
     </yd-flexbox>
 </template>
 <script>
 import { mapMutations, mapState, mapActions } from 'vuex'
-import { placeApi } from '@/api'
+import { placeApi, getOrderApi, updateSeatApi } from '@/api'
 export default {
+  data () {
+    return {
+      show: false,
+      inpurtValue: '',
+      orderData: {},
+      mapping: ['A', 'B', 'C', 'D'],
+      status: ['已下单', '已下厨', '已上菜']
+    }
+  },
   computed: {
     ...mapState({
       showCar: state => state.HomePage.showCar,
@@ -56,6 +81,11 @@ export default {
   created () {
     // 获取购物车信息
     this.refreshCar()
+    // 订单购物车信息
+    getOrderApi().then(({data}) => {
+      console.log(data.data)
+      this.orderData = data.data
+    })
   },
   methods: {
     ...mapMutations({
@@ -76,6 +106,28 @@ export default {
           amount
         })
       }
+    },
+    editNumber () {
+      this.show = true
+    },
+    inputNumber () {
+      if (!this.inpurtValue) return
+      updateSeatApi({peopleNumber: this.inpurtValue}).then(({data}) => {
+        this.$dialog.notify({
+          mes: data.msg,
+          timeout: 3000
+        })
+        this.show = false
+        getOrderApi().then(({data}) => {
+          console.log(data.data)
+          this.orderData = data.data
+        })
+      }).catch((err) => {
+        this.$dialog.notify({
+          mes: err.response.msg,
+          timeout: 3000
+        })
+      })
     },
     dishes () {
       this.$router.push({path: '/'})
@@ -148,5 +200,22 @@ export default {
         line-height: .2rem;
         font-size: .26rem;
         color: #808080;
+    }
+    .popup{
+        background-color: #ffffff;
+    }
+    .popup h2 {
+        padding: .2rem 0;
+    }
+    .input-box {
+        padding: .2rem .4rem;
+    }
+    .input-box input {
+        border: 1px solid #dedede;
+        height: .8rem;
+        padding: .1rem .2rem .1rem .2rem;
+    }
+    .button-info {
+        padding: .2rem .4rem .6rem .4rem;
     }
 </style>

@@ -85,3 +85,7 @@ export const queueApi = () => {
 export const cancelQueueApi = () => {
   return axios.post(`/customer/queue/cancel?openId=${openId}`)
 }
+// 修改用餐人数
+export const updateSeatApi = ({peopleNumber}) => {
+  return axios.post(`/customer/ordermeal/updateSeat?tableId=${tableId}&peopleNumber=${peopleNumber}`)
+}
