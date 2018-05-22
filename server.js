@@ -6,8 +6,8 @@ var axios = require('axios')
 app.use('/static', express.static('./dist/static'));
 app.use(cookieParser())
 app.get('*', function (req, res) {
-  if (!req.cookies.openId) {
-    res.redirect(`http://120.78.165.70/wechat/authorize?returnUrl=${'http://47.98.212.129:8080/#/?tableId=37'}`);
+  if (req.query.tableId) {
+    res.redirect(`http://120.78.165.70/wechat/authorize?returnUrl=${req.query.tableId}`);
   } else {
     res.sendfile('./dist/index.html');
   }
